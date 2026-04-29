@@ -1,0 +1,101 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Netflix Sans font stack — falls back gracefully without needing to host the font */
+@font-face {
+  font-family: 'Netflix Sans';
+  src: local('Netflix Sans');
+  font-display: swap;
+}
+
+:root {
+  --netflix-red: #e50914;
+  --netflix-dark: #141414;
+  --netflix-dark-2: #181818;
+  --netflix-dark-3: #2f2f2f;
+  --text-primary: #e6e6e6;
+  --text-secondary: #999999;
+  --text-white: #ffffff;
+  --nav-height: 68px;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--netflix-dark);
+  color: var(--text-primary);
+  font-family: 'Netflix Sans', 'Helvetica Neue', Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+.custom-cursor {
+  position: fixed;
+  width: 42px;
+  height: 42px;
+  left: 0;
+  top: 0;
+  opacity: 0;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  transition: opacity 120ms ease;
+  z-index: 10000;
+}
+
+.custom-cursor.is-visible {
+  opacity: 1;
+}
+
+@media (pointer: fine) {
+  html,
+  body,
+  a,
+  button,
+  input,
+  textarea,
+  select,
+  [role="button"],
+  [tabindex]:not([tabindex="-1"]) {
+    cursor: none !important;
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--netflix-dark);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--netflix-dark-3);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-secondary);
+}
+
+/* Utility classes */
+.netflix-red { color: var(--netflix-red); }
+.section-title {
+  @apply text-text-primary text-xl sm:text-2xl font-bold mb-4 tracking-wide;
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

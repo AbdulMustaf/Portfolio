@@ -1,0 +1,73 @@
+/* Netflix opening title animation */
+@keyframes netflixFadeIn {
+  from { opacity: 0; transform: scale(0.85); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+@keyframes netflixZoomOut {
+  0%   { opacity: 1; transform: scale(1); }
+  100% { opacity: 0; transform: scale(3.5); }
+}
+
+@keyframes netflixReveal {
+  0%   { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+/* Card entrance */
+@keyframes fadeSlideUp {
+  from { opacity: 0; transform: translateY(40px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Hero tagline cascade */
+@keyframes fadeSlideIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Pulsing red glow for idle state */
+@keyframes redPulse {
+  0%, 100% { box-shadow: 0 0 0px var(--netflix-red); }
+  50%       { box-shadow: 0 0 20px var(--netflix-red); }
+}
+
+/* Netflix title screen classes */
+.netflix-title-screen {
+  position: fixed;
+  inset: 0;
+  background: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.netflix-title-name {
+  max-width: 90vw;
+  font-size: 2.5rem;
+  font-weight: 900;
+  color: var(--netflix-red);
+  line-height: 0.95;
+  letter-spacing: 0;
+  text-align: center;
+  animation: netflixFadeIn 0.6s ease-out forwards;
+  text-shadow: 0 0 60px rgba(229, 9, 20, 0.5);
+  user-select: none;
+}
+
+.netflix-title-name.zoom-out {
+  animation: netflixZoomOut 0.7s ease-in forwards;
+}
+
+@media (min-width: 640px) {
+  .netflix-title-name {
+    font-size: 4rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .netflix-title-name {
+    font-size: 5.5rem;
+  }
+}
