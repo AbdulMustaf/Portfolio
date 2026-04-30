@@ -40,9 +40,4 @@ export const skillsData: SkillCategory[] = [
     icon: '📋',
     skills: ['Product Management', 'Agile / Scrum', 'Figma', 'User Stories', 'Roadmapping'],
   },
-  {
-    category: 'Cybersecurity',
-    icon: '🔒',
-    skills: ['OWASP Top 10', 'Security Testing', 'Threat Modeling', 'Compliance Frameworks'],
-  },
 ]

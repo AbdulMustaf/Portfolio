@@ -21,7 +21,7 @@ export const socialLinksData: SocialLink[] = [
   {
     platform: 'email',
     label: 'Email',
-    url: 'mailto:abdullah.mustafa@ontariotechu.net',
+    url: 'mailto:abdullahmustafa300@gmail.com',
     icon: 'FaEnvelope',
   },
   {

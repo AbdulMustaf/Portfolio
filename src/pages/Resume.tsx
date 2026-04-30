@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 
 export default function Resume() {
   const resumeUrl = '/resume.pdf'
+  const resumeViewerUrl = `${resumeUrl}#zoom=100`
 
   return (
     <div className="min-h-screen bg-netflix-dark flex flex-col">
@@ -20,7 +21,7 @@ export default function Resume() {
         </Link>
         <div className="flex items-center gap-3">
           <a
-            href={resumeUrl}
+            href={resumeViewerUrl}
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center gap-1.5 text-text-secondary hover:text-white transition-colors text-sm"
@@ -43,7 +44,7 @@ export default function Resume() {
       {/* PDF embed */}
       <div className="flex-1 flex flex-col" style={{ paddingTop: 0 }}>
         <iframe
-          src={`${resumeUrl}#view=FitH`}
+          src={resumeViewerUrl}
           title="Abdullah Mustafa — Resume"
           className="w-full flex-1"
           style={{ minHeight: 'calc(100vh - var(--nav-height))', border: 'none' }}
@@ -54,7 +55,7 @@ export default function Resume() {
           <div className="flex flex-col items-center justify-center py-20 gap-4 text-center px-4">
             <p className="text-text-secondary">PDF preview is not available in this browser.</p>
             <a
-              href={resumeUrl}
+              href={resumeViewerUrl}
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center gap-2 bg-netflix-red text-white px-6 py-3 rounded font-semibold hover:bg-red-700 transition-colors"
@@ -69,7 +70,7 @@ export default function Resume() {
       {/* Mobile fallback banner */}
       <div className="sm:hidden bg-netflix-dark-2 border-t border-white/5 px-4 py-4 flex justify-center gap-3">
         <a
-          href={resumeUrl}
+          href={resumeViewerUrl}
           target="_blank"
           rel="noopener noreferrer"
           className="flex items-center gap-2 text-sm text-text-secondary hover:text-white transition-colors"

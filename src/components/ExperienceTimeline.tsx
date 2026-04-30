@@ -1,101 +1,114 @@
-import { useRef, useEffect } from 'react'
-import gsap from 'gsap'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { FaBriefcase, FaFlask } from 'react-icons/fa'
+import 'react-vertical-timeline-component/style.min.css'
+import { VerticalTimeline, VerticalTimelineElement } from 'react-vertical-timeline-component'
+import { MdOutlineWork } from 'react-icons/md'
+import { IoSchool } from 'react-icons/io5'
+import { FaFlask, FaStar } from 'react-icons/fa'
 import { experienceData } from '../data/experienceData'
 
-gsap.registerPlugin(ScrollTrigger)
-
-const typeIcon = (type: string) => {
-  if (type === 'Research') return <FaFlask className="text-netflix-red" size={16} />
-  return <FaBriefcase className="text-netflix-red" size={16} />
+// Mirrors the reference: work=blue, research=purple, education=pink
+const TYPE_CONFIG: Record<string, {
+  cardBg: string
+  cardText: string
+  arrowColor: string
+  iconBg: string
+  Icon: React.ComponentType<{ className?: string }>
+}> = {
+  'Co-op': {
+    cardBg: 'rgb(33, 150, 243)',
+    cardText: '#fff',
+    arrowColor: 'rgb(33, 150, 243)',
+    iconBg: 'rgb(33, 150, 243)',
+    Icon: MdOutlineWork,
+  },
+  'Research': {
+    cardBg: 'rgb(103, 58, 183)',
+    cardText: '#fff',
+    arrowColor: 'rgb(103, 58, 183)',
+    iconBg: 'rgb(103, 58, 183)',
+    Icon: FaFlask,
+  },
+  'Education': {
+    cardBg: 'rgb(255, 224, 230)',
+    cardText: '#000',
+    arrowColor: 'rgb(255, 224, 230)',
+    iconBg: 'rgb(255, 160, 200)',
+    Icon: IoSchool,
+  },
 }
 
 export default function ExperienceTimeline() {
-  const containerRef = useRef<HTMLDivElement>(null)
-
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      gsap.from('.exp-card', {
-        y: 50,
-        opacity: 0,
-        duration: 0.7,
-        stagger: 0.15,
-        ease: 'power3.out',
-        scrollTrigger: {
-          trigger: containerRef.current,
-          start: 'top 80%',
-        },
-      })
-    }, containerRef)
-    return () => ctx.revert()
-  }, [])
-
   return (
-    <section id="experience" ref={containerRef} className="py-10 px-4 sm:px-6 lg:px-10">
-      <h2 className="section-title">Experience</h2>
-      <p className="text-text-secondary text-sm mb-8">— Episodes in the story so far</p>
+    <div className="timeline-container">
+      <h2 className="timeline-title">📅 Work Experience &amp; Education Timeline</h2>
 
-      <div className="relative">
-        {/* Timeline line */}
-        <div className="absolute left-6 top-0 bottom-0 w-px bg-netflix-dark-3 hidden sm:block" />
+      <VerticalTimeline lineColor="#2f2f2f">
+        {experienceData.map((exp) => {
+          const cfg = TYPE_CONFIG[exp.type] ?? TYPE_CONFIG['Co-op']
+          const Icon = cfg.Icon
 
-        <div className="flex flex-col gap-6">
-          {experienceData.map((exp, i) => (
-            <div
+          return (
+            <VerticalTimelineElement
               key={exp.id}
-              className="exp-card relative sm:pl-16 bg-netflix-dark-2 rounded-xl p-6 border border-white/5 hover:border-netflix-red/30 transition-colors duration-300"
+              contentStyle={{
+                background: cfg.cardBg,
+                color: cfg.cardText,
+                boxShadow: '0 4px 12px rgba(0,0,0,0.4)',
+              }}
+              contentArrowStyle={{ borderRight: `7px solid ${cfg.arrowColor}` }}
+              date={exp.dates}
+              iconStyle={{ background: cfg.iconBg, color: '#fff' }}
+              icon={<Icon />}
             >
-              {/* Timeline dot */}
-              <div className="absolute left-0 top-6 w-12 h-12 bg-netflix-dark-3 border-2 border-netflix-red rounded-full items-center justify-center hidden sm:flex">
-                {typeIcon(exp.type)}
+              <div style={{ color: cfg.cardText }}>
+                <h3 className="vertical-timeline-element-title font-bold text-lg leading-snug">
+                  {exp.role}
+                </h3>
+                <h4 className="vertical-timeline-element-subtitle font-medium text-sm mt-1 opacity-90">
+                  {exp.orgFull}
+                </h4>
+                {exp.type !== 'Education' && (
+                  <p className="text-xs mt-0.5 opacity-70">{exp.location}</p>
+                )}
+                <p className="text-sm leading-relaxed mt-3 opacity-90">{exp.description}</p>
+
+                {exp.highlights.length > 0 && (
+                  <ul className="mt-3 space-y-1">
+                    {exp.highlights.map((h, i) => (
+                      <li key={i} className="flex gap-2 text-sm opacity-85">
+                        <span className="flex-shrink-0">›</span>
+                        <span>{h}</span>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+
+                {exp.tech.length > 0 && (
+                  <div className="flex flex-wrap gap-1.5 mt-3">
+                    {exp.tech.map((t) => (
+                      <span
+                        key={t}
+                        className="text-xs px-2 py-0.5 rounded"
+                        style={{
+                          background: 'rgba(0,0,0,0.2)',
+                          border: '1px solid rgba(255,255,255,0.2)',
+                        }}
+                      >
+                        {t}
+                      </span>
+                    ))}
+                  </div>
+                )}
               </div>
+            </VerticalTimelineElement>
+          )
+        })}
 
-              {/* Episode number badge */}
-              <div className="flex items-center gap-3 mb-3">
-                <span className="text-netflix-red text-xs font-bold uppercase tracking-widest">
-                  Episode {String(i + 1).padStart(2, '0')}
-                </span>
-                <span className="text-text-secondary text-xs">·</span>
-                <span className="text-text-secondary text-xs uppercase tracking-wide">{exp.type}</span>
-              </div>
-
-              <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2 mb-3">
-                <div>
-                  <h3 className="text-white text-lg font-bold leading-tight">{exp.role}</h3>
-                  <p className="text-netflix-red text-sm font-medium">{exp.orgFull}</p>
-                </div>
-                <div className="text-right flex-shrink-0">
-                  <p className="text-text-secondary text-xs">{exp.dates}</p>
-                  <p className="text-text-secondary text-xs mt-0.5">{exp.location}</p>
-                </div>
-              </div>
-
-              <p className="text-text-primary text-sm leading-relaxed mb-4">{exp.description}</p>
-
-              <ul className="space-y-1.5 mb-4">
-                {exp.highlights.map((h, j) => (
-                  <li key={j} className="flex gap-2 text-sm text-text-secondary">
-                    <span className="text-netflix-red flex-shrink-0 mt-0.5">›</span>
-                    <span>{h}</span>
-                  </li>
-                ))}
-              </ul>
-
-              <div className="flex flex-wrap gap-1.5">
-                {exp.tech.map((t) => (
-                  <span
-                    key={t}
-                    className="text-xs bg-netflix-dark-3 text-text-secondary px-2 py-0.5 rounded border border-white/10"
-                  >
-                    {t}
-                  </span>
-                ))}
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
+        {/* Closing star — same as reference */}
+        <VerticalTimelineElement
+          iconStyle={{ background: 'rgb(16, 204, 82)', color: '#fff' }}
+          icon={<FaStar />}
+        />
+      </VerticalTimeline>
+    </div>
   )
 }

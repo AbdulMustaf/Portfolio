@@ -55,7 +55,7 @@ export default function AboutSection() {
             Building software that<br />
             <span className="text-netflix-red">actually matters</span>
           </h3>
-          <p className="text-text-primary leading-relaxed">{profileData.bio}</p>
+          <p className="text-text-primary leading-relaxed whitespace-pre-line">{profileData.bio}</p>
           <p className="text-text-secondary text-sm leading-relaxed">
             With experience spanning government digital services, academic AI research, and independent
             project development, I bring a product-minded perspective to every engineering challenge.

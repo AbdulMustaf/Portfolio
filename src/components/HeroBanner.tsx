@@ -110,7 +110,7 @@ export default function HeroBanner() {
                 Ontario Tech
               </a>
             </p>
-            <p className="text-text-primary text-sm sm:text-base leading-relaxed max-w-lg mb-8 line-clamp-3 lg:line-clamp-none">
+            <p className="text-text-primary text-sm sm:text-base leading-relaxed max-w-lg mb-8 line-clamp-3 lg:line-clamp-none whitespace-pre-line">
               {profileData.bio}
             </p>
           </div>

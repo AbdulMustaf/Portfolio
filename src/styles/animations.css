@@ -32,6 +32,33 @@
   50%       { box-shadow: 0 0 20px var(--netflix-red); }
 }
 
+/* ── Skills: letter drop-in (ref: Skills.css .letter) ───────────────────── */
+@keyframes letterDrop {
+  to { opacity: 1; transform: translateY(0); }
+}
+.letter-drop {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(-20px);
+  animation: letterDrop 0.5s forwards ease-out;
+}
+
+/* ── Contact: coffee sway (ref: ContactMe.css @keyframes swing) ─────────── */
+@keyframes coffeeSwing {
+  0%, 100% { transform: rotate(0deg); }
+  50%       { transform: rotate(30deg); }
+}
+.coffee-swing {
+  animation: coffeeSwing 1s infinite ease-in-out;
+}
+
+/* ── Projects: card fade-in-up with staggered delay ─────────────────────── */
+.project-card-animate {
+  opacity: 0;
+  animation: fadeSlideUp 0.5s forwards ease-in-out;
+  animation-delay: var(--delay, 0s);
+}
+
 /* Terminal cursor blink */
 @keyframes termBlink {
   0%, 100% { opacity: 1; }
