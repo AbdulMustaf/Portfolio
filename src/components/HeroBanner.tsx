@@ -1,4 +1,5 @@
 import { useRef, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 import gsap from 'gsap'
 import HeroMaskReveal from './HeroMaskReveal'
 import PlayButton from './PlayButton'
@@ -7,6 +8,7 @@ import { profileData } from '../data/profileData'
 import { FaMapMarkerAlt } from 'react-icons/fa'
 
 export default function HeroBanner() {
+  const navigate = useNavigate()
   const sectionRef = useRef<HTMLElement>(null)
   const textRef = useRef<HTMLDivElement>(null)
   const badgesRef = useRef<HTMLDivElement>(null)
@@ -38,10 +40,6 @@ export default function HeroBanner() {
     })
     return () => ctx.revert()
   }, [])
-
-  const scrollToProjects = () => {
-    document.querySelector('#projects')?.scrollIntoView({ behavior: 'smooth' })
-  }
 
   return (
     <section
@@ -111,19 +109,13 @@ export default function HeroBanner() {
 
           {/* CTA buttons */}
           <div ref={buttonsRef} className="flex flex-wrap gap-3">
-            <PlayButton onClick={scrollToProjects} label="View Projects" />
+            <PlayButton onClick={() => navigate('/projects')} label="View Projects" />
             <MoreInfoButton
-              onClick={() => document.querySelector('#about')?.scrollIntoView({ behavior: 'smooth' })}
+              onClick={() => navigate('/experience')}
               label="More Info"
             />
           </div>
         </div>
-      </div>
-
-      {/* Scroll indicator */}
-      <div className="absolute bottom-6 right-6 lg:right-10 z-10 hidden sm:flex flex-col items-center gap-2 opacity-40 animate-bounce">
-        <div className="w-px h-8 bg-white" />
-        <span className="text-white text-xs uppercase tracking-widest rotate-0">Scroll</span>
       </div>
     </section>
   )

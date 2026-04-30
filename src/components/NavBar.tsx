@@ -4,13 +4,12 @@ import { FaBars, FaTimes } from 'react-icons/fa'
 import { profileData } from '../data/profileData'
 
 const navLinks = [
-  { label: 'Home', href: '#home' },
-  { label: 'About', href: '#about' },
-  { label: 'Projects', href: '#projects' },
-  { label: 'Experience', href: '#experience' },
-  { label: 'Skills', href: '#skills' },
-  { label: 'Resume', href: '/resume', isRoute: true },
-  { label: 'Contact', href: '#contact' },
+  { label: 'Home', href: '/' },
+  { label: 'Experience', href: '/experience' },
+  { label: 'Skills', href: '/skills' },
+  { label: 'Projects', href: '/projects' },
+  { label: 'Resume', href: '/resume' },
+  { label: 'Contact', href: '/contact' },
 ]
 
 export default function NavBar() {
@@ -26,15 +25,11 @@ export default function NavBar() {
 
   useEffect(() => {
     setMenuOpen(false)
-  }, [location])
+    window.scrollTo(0, 0)
+  }, [location.pathname])
 
-  const handleAnchorClick = (href: string) => {
-    setMenuOpen(false)
-    if (href.startsWith('#')) {
-      const el = document.querySelector(href)
-      if (el) el.scrollIntoView({ behavior: 'smooth' })
-    }
-  }
+  const isActive = (href: string) =>
+    href === '/' ? location.pathname === '/' : location.pathname.startsWith(href)
 
   return (
     <>
@@ -56,27 +51,20 @@ export default function NavBar() {
 
           {/* Desktop links */}
           <ul className="hidden md:flex items-center gap-6 list-none">
-            {navLinks.map((link) =>
-              link.isRoute ? (
-                <li key={link.label}>
-                  <Link
-                    to={link.href}
-                    className="text-text-primary hover:text-white text-sm font-medium transition-colors duration-200"
-                  >
-                    {link.label}
-                  </Link>
-                </li>
-              ) : (
-                <li key={link.label}>
-                  <button
-                    onClick={() => handleAnchorClick(link.href)}
-                    className="text-text-primary hover:text-white text-sm font-medium transition-colors duration-200 bg-transparent border-0 cursor-pointer"
-                  >
-                    {link.label}
-                  </button>
-                </li>
-              )
-            )}
+            {navLinks.map((link) => (
+              <li key={link.label}>
+                <Link
+                  to={link.href}
+                  className={`text-sm font-medium transition-colors duration-200 ${
+                    isActive(link.href)
+                      ? 'text-white font-semibold border-b-2 border-netflix-red pb-0.5'
+                      : 'text-text-primary hover:text-white'
+                  }`}
+                >
+                  {link.label}
+                </Link>
+              </li>
+            ))}
           </ul>
 
           {/* Hamburger */}
@@ -104,26 +92,18 @@ export default function NavBar() {
           }`}
         >
           <p className="text-text-secondary text-xs uppercase tracking-widest mb-2">Navigation</p>
-          {navLinks.map((link) =>
-            link.isRoute ? (
-              <Link
-                key={link.label}
-                to={link.href}
-                className="text-text-primary hover:text-netflix-red text-lg font-medium transition-colors"
-                onClick={() => setMenuOpen(false)}
-              >
-                {link.label}
-              </Link>
-            ) : (
-              <button
-                key={link.label}
-                onClick={() => handleAnchorClick(link.href)}
-                className="text-text-primary hover:text-netflix-red text-lg font-medium transition-colors text-left bg-transparent border-0 cursor-pointer"
-              >
-                {link.label}
-              </button>
-            )
-          )}
+          {navLinks.map((link) => (
+            <Link
+              key={link.label}
+              to={link.href}
+              className={`text-lg font-medium transition-colors ${
+                isActive(link.href) ? 'text-netflix-red' : 'text-text-primary hover:text-netflix-red'
+              }`}
+              onClick={() => setMenuOpen(false)}
+            >
+              {link.label}
+            </Link>
+          ))}
           <div className="mt-auto pb-8 text-text-secondary text-sm">
             {profileData.name}
           </div>

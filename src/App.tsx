@@ -4,6 +4,10 @@ import CustomCursor from './components/CustomCursor'
 import NetflixTitle from './components/NetflixTitle'
 import NavBar from './components/NavBar'
 import Home from './pages/Home'
+import Experience from './pages/Experience'
+import Skills from './pages/Skills'
+import Projects from './pages/Projects'
+import Contact from './pages/Contact'
 import Resume from './pages/Resume'
 
 export default function App() {
@@ -24,6 +28,10 @@ export default function App() {
         <NavBar />
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/experience" element={<Experience />} />
+          <Route path="/skills" element={<Skills />} />
+          <Route path="/projects" element={<Projects />} />
+          <Route path="/contact" element={<Contact />} />
           <Route path="/resume" element={<Resume />} />
         </Routes>
       </div>
