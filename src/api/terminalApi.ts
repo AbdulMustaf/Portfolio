@@ -1,9 +1,9 @@
 /**
  * terminalApi.ts
  *
- * API layer for the MiniTerminal component.
- * Both functions are currently mocked. Each has a clearly-marked
- * "REPLACE" block showing exactly what to swap in once your backend exists.
+ * API layer for the MiniTerminal component. In production, these call Vercel
+ * serverless routes. Local fallbacks keep the terminal usable if the API is not
+ * configured yet.
  *
  * Backend contract expected:
  *   GET  /api/viewer-count           → { viewerCount: number }
@@ -23,54 +23,48 @@ export interface ChatMessage {
 
 // ─── Viewer Count ─────────────────────────────────────────────────────────────
 
-/**
- * Returns how many times this portfolio has been visited.
- *
- * REPLACE with real API:
- *
- *   const res = await fetch('/api/viewer-count')
- *   if (!res.ok) throw new Error('viewer-count failed')
- *   const data = await res.json()     // { viewerCount: number }
- *   return data.viewerCount
- *
- * Mock: increments a per-browser localStorage counter starting at 41,
- * so the first visit shows "42nd viewer".
- */
 export async function getViewerCount(): Promise<number> {
-  await pause(350 + Math.random() * 200)
-  const key = '__portfolio_visitor_count'
-  const n = (parseInt(localStorage.getItem(key) ?? '41', 10)) + 1
-  localStorage.setItem(key, String(n))
-  return n
+  const sessionKey = '__portfolio_session_viewer_count'
+  const sessionCount = sessionStorage.getItem(sessionKey)
+  if (sessionCount) return parseInt(sessionCount, 10)
+
+  try {
+    const res = await fetch('/api/viewer-count')
+    if (!res.ok) throw new Error('viewer-count failed')
+    const data = await res.json() as { viewerCount?: number }
+    if (typeof data.viewerCount !== 'number') throw new Error('viewer-count malformed')
+    sessionStorage.setItem(sessionKey, String(data.viewerCount))
+    return data.viewerCount
+  } catch {
+    await pause(250)
+    const key = '__portfolio_visitor_count'
+    const n = (parseInt(localStorage.getItem(key) ?? '0', 10)) + 1
+    localStorage.setItem(key, String(n))
+    sessionStorage.setItem(sessionKey, String(n))
+    return n
+  }
 }
 
 // ─── RAG Chat ─────────────────────────────────────────────────────────────────
 
-/**
- * Sends a message + full conversation history to the RAG assistant.
- *
- * REPLACE with real API:
- *
- *   const res = await fetch('/api/rag-chat', {
- *     method: 'POST',
- *     headers: { 'Content-Type': 'application/json' },
- *     body: JSON.stringify({ message, conversationHistory }),
- *   })
- *   if (!res.ok) throw new Error('rag-chat failed')
- *   const data = await res.json()     // { answer: string }
- *   return data.answer
- *
- * The backend should:
- *   1. Retrieve relevant chunks from a vector store seeded with Abdullah's profile
- *   2. Pass retrieved context + conversationHistory + message to your LLM
- *   3. Return the model's answer as { answer: string }
- */
 export async function sendRagMessage(
   message: string,
   conversationHistory: ChatMessage[],
 ): Promise<string> {
-  await pause(800 + Math.random() * 700) // simulate LLM latency
-  return mockRagResponse(message, conversationHistory)
+  try {
+    const res = await fetch('/api/rag-chat', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ message, conversationHistory }),
+    })
+    if (!res.ok) throw new Error('rag-chat failed')
+    const data = await res.json() as { answer?: string }
+    if (!data.answer) throw new Error('rag-chat malformed')
+    return data.answer
+  } catch {
+    await pause(450)
+    return mockRagResponse(message, conversationHistory)
+  }
 }
 
 // ─── Internals ────────────────────────────────────────────────────────────────
@@ -81,8 +75,7 @@ function has(q: string, ...keywords: string[]): boolean {
   return keywords.some((k) => q.includes(k))
 }
 
-// ─── Mock RAG ─────────────────────────────────────────────────────────────────
-// Delete everything below this line once the real backend is connected.
+// ─── Local Fallback RAG ───────────────────────────────────────────────────────
 
 function mockRagResponse(message: string, _history: ChatMessage[]): string {
   const q = message.toLowerCase()
@@ -134,5 +127,5 @@ function mockRagResponse(message: string, _history: ChatMessage[]): string {
     return profileData.bio
   }
 
-  return `I don't have a specific answer for that yet — the real RAG backend isn't connected. Try asking about Abdullah's school, work experience, projects, skills, location, or how to contact him!`
+  return `I don't have a specific answer for that yet. Try asking about Abdullah's school, work experience, projects, skills, location, or how to contact him!`
 }

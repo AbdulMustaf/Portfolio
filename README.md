@@ -9,6 +9,8 @@ A cinematic, Netflix-inspired personal portfolio built with React, TypeScript, G
 - **Netflix UI** — Hero banner, horizontal card carousels, dark theme, red accent
 - **Data-driven** — All content lives in `src/data/` files; update content without touching components
 - **Resume viewer** — PDF embed at `/resume` with download fallback
+- **Terminal assistant** — `/api/rag-chat` retrieves portfolio context and answers questions through Gemini when configured
+- **Viewer counter** — `/api/viewer-count` increments a persistent Vercel KV / Upstash count when configured
 - **Fully responsive** — Desktop, tablet, mobile
 
 ## Tech Stack
@@ -73,9 +75,18 @@ npx vercel
 1. Push this repo to GitHub
 2. Import it at [vercel.com/new](https://vercel.com/new)
 3. Vercel auto-detects Vite — click Deploy
-4. No environment variables required
+4. Add environment variables if you want the Gemini-backed terminal enabled:
+   - `GEMINI_API_KEY` for the RAG assistant
+   - `GEMINI_MODEL` optional, defaults to `gemini-2.0-flash`
+   - `KV_REST_API_URL` and `KV_REST_API_TOKEN` for persistent viewer counts through Vercel KV / Upstash
+
+For a no-payment setup, create the Gemini key in Google AI Studio on the free tier and do not enable billing on the project. Without these variables, the app still deploys: the terminal uses local fallback answers and the viewer API uses an instance-local count. The Gemini route also has an in-memory per-IP limiter before the external API call, so heavy traffic falls back to local portfolio context instead of burning API quota.
 
 The `vercel.json` SPA rewrite rule is already configured.
+
+### Custom domain
+
+In Vercel, open the project, go to **Settings → Domains**, add `abdullahmustafa.com`, then follow Vercel's DNS instructions at your domain registrar. Usually that means pointing the apex domain to Vercel and optionally adding `www.abdullahmustafa.com` as a redirect/alias.
 
 ## Project Structure
 
