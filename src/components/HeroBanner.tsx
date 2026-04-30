@@ -100,7 +100,15 @@ export default function HeroBanner() {
               {profileData.headline}
             </p>
             <p className="text-text-secondary text-sm sm:text-base mb-6">
-              {profileData.tagline}
+              CS @{' '}
+              <a
+                href="https://ontariotechu.ca/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-netflix-red hover:underline"
+              >
+                Ontario Tech
+              </a>
             </p>
             <p className="text-text-primary text-sm sm:text-base leading-relaxed max-w-lg mb-8 line-clamp-3 lg:line-clamp-none">
               {profileData.bio}
@@ -109,10 +117,10 @@ export default function HeroBanner() {
 
           {/* CTA buttons */}
           <div ref={buttonsRef} className="flex flex-wrap gap-3">
-            <PlayButton onClick={() => navigate('/projects')} label="View Projects" />
+            <PlayButton onClick={() => navigate('/resume')} label="Resume" />
             <MoreInfoButton
-              onClick={() => navigate('/experience')}
-              label="More Info"
+              onClick={() => window.open(profileData.linkedin, '_blank', 'noopener,noreferrer')}
+              label="LinkedIn"
             />
           </div>
         </div>
