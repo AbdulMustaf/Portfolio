@@ -1,3 +1,5 @@
+/// <reference types="node" />
+
 import type { IncomingMessage, ServerResponse } from 'node:http'
 
 const key = 'portfolio:viewer-count'
@@ -22,22 +24,22 @@ export default async function handler(_req: IncomingMessage, res: ServerResponse
   if (_req.method !== 'GET') {
     res.statusCode = 405
     res.setHeader('Allow', 'GET')
+    res.setHeader('Content-Type', 'application/json')
     res.end(JSON.stringify({ error: 'Method not allowed' }))
     return
   }
 
+  let kvCount: number | null = null
   try {
-    const persistedCount = await incrementWithKv()
-    const viewerCount = persistedCount ?? ++localViewerCount
-
-    res.statusCode = 200
-    res.setHeader('Content-Type', 'application/json')
-    res.setHeader('Cache-Control', 'no-store')
-    res.end(JSON.stringify({ viewerCount }))
+    kvCount = await incrementWithKv()
   } catch (error) {
-    console.error(error)
-    res.statusCode = 500
-    res.setHeader('Content-Type', 'application/json')
-    res.end(JSON.stringify({ error: 'Could not update viewer count' }))
+    console.error('KV increment failed, falling back to in-memory counter:', error)
   }
+
+  const viewerCount = kvCount ?? ++localViewerCount
+
+  res.statusCode = 200
+  res.setHeader('Content-Type', 'application/json')
+  res.setHeader('Cache-Control', 'no-store')
+  res.end(JSON.stringify({ viewerCount }))
 }

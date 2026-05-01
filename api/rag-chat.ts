@@ -1,8 +1,11 @@
+/// <reference types="node" />
+
 import type { IncomingMessage, ServerResponse } from 'node:http'
-import { experienceData } from '../src/data/experienceData'
-import { profileData } from '../src/data/profileData'
-import { projectsData } from '../src/data/projectsData'
-import { skillsData } from '../src/data/skillsData'
+import { experienceData } from '../src/data/experienceData.js'
+import { profileData } from '../src/data/profileData.js'
+import { projectsData } from '../src/data/projectsData.js'
+import { skillsData } from '../src/data/skillsData.js'
+import { ruleBasedAnswer } from '../src/lib/ragRules.js'
 
 interface ChatMessage {
   role: 'user' | 'assistant'
@@ -34,6 +37,7 @@ const maxGeminiRequestsPerDay = 60
 const minuteBuckets = new Map<string, { count: number; resetAt: number }>()
 const dayBuckets = new Map<string, { count: number; resetAt: number }>()
 
+// Corpus is kept for the Gemini path: it gives the LLM grounded context.
 const corpus: CorpusChunk[] = [
   {
     title: 'Profile',
@@ -80,6 +84,14 @@ const corpus: CorpusChunk[] = [
   })),
 ]
 
+// RagData object passed to the rule engine on every fallback call.
+const ragData = {
+  profile: profileData,
+  experience: experienceData,
+  projects: projectsData,
+  skills: skillsData,
+}
+
 function readBody(req: IncomingMessage): Promise<string> {
   return new Promise((resolve, reject) => {
     let body = ''
@@ -119,15 +131,6 @@ function retrieveContext(message: string) {
   return (matches.length ? matches : corpus.slice(0, 4))
     .map((chunk) => `## ${chunk.title}\n${chunk.text}`)
     .join('\n\n')
-}
-
-function fallbackAnswer(message: string, context: string) {
-  return [
-    'I can still answer from Abdullah\'s portfolio data, but the AI layer is unavailable or rate-limited right now.',
-    '',
-    `Relevant context I found for "${message}":`,
-    context,
-  ].join('\n')
 }
 
 function getClientId(req: IncomingMessage) {
@@ -178,10 +181,10 @@ function checkRateLimit(clientId: string) {
 
 async function callGemini(message: string, history: ChatMessage[], context: string) {
   const apiKey = process.env.GEMINI_API_KEY
-  if (!apiKey) return fallbackAnswer(message, context)
+  if (!apiKey) return ruleBasedAnswer(message, ragData)
 
   const trimmedHistory = history.slice(-6)
-  const model = process.env.GEMINI_MODEL ?? 'gemini-2.0-flash'
+  const model = process.env.GEMINI_MODEL ?? 'gemini-2.0-flash-lite'
   const prompt = [
     'You are Abdullah Mustafa\'s portfolio assistant.',
     'Answer only using the provided portfolio context and recent chat history.',
@@ -197,27 +200,29 @@ async function callGemini(message: string, history: ChatMessage[], context: stri
     `Question: ${message}`,
   ].join('\n')
 
-  const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(model)}:generateContent?key=${apiKey}`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      contents: [
-        {
-          role: 'user',
-          parts: [{ text: prompt }],
-        },
-      ],
-      generationConfig: {
-        temperature: 0.2,
-        maxOutputTokens: 700,
+  const controller = new AbortController()
+  const abortTimer = setTimeout(() => controller.abort(), 8_000)
+
+  let res: Response
+  try {
+    res = await fetch(
+      `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(model)}:generateContent?key=${apiKey}`,
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          contents: [{ role: 'user', parts: [{ text: prompt }] }],
+          generationConfig: { temperature: 0.2, maxOutputTokens: 700 },
+        }),
+        signal: controller.signal,
       },
-    }),
-  })
+    )
+  } finally {
+    clearTimeout(abortTimer)
+  }
 
   if (!res.ok) {
-    const errorText = await res.text()
+    const errorText = await res.text().catch(() => res.statusText)
     throw new Error(`Gemini request failed: ${res.status} ${errorText}`)
   }
 
@@ -227,13 +232,14 @@ async function callGemini(message: string, history: ChatMessage[], context: stri
     .map((part) => part.text ?? '')
     .join('')
 
-  return outputText?.trim() || fallbackAnswer(message, context)
+  return outputText?.trim() || ruleBasedAnswer(message, ragData)
 }
 
 export default async function handler(req: IncomingMessage, res: ServerResponse) {
   if (req.method !== 'POST') {
     res.statusCode = 405
     res.setHeader('Allow', 'POST')
+    res.setHeader('Content-Type', 'application/json')
     res.end(JSON.stringify({ error: 'Method not allowed' }))
     return
   }
@@ -256,7 +262,7 @@ export default async function handler(req: IncomingMessage, res: ServerResponse)
       res.setHeader('Cache-Control', 'no-store')
       res.setHeader('Retry-After', String(rateLimit.retryAfterSeconds))
       res.setHeader('X-RAG-Mode', 'local-fallback-rate-limited')
-      res.end(JSON.stringify({ answer: fallbackAnswer(message, context) }))
+      res.end(JSON.stringify({ answer: ruleBasedAnswer(message, ragData) }))
       return
     }
 
@@ -265,7 +271,7 @@ export default async function handler(req: IncomingMessage, res: ServerResponse)
       answer = await callGemini(message, body.conversationHistory ?? [], context)
     } catch (error) {
       console.error(error)
-      answer = fallbackAnswer(message, context)
+      answer = ruleBasedAnswer(message, ragData)
     }
 
     res.statusCode = 200

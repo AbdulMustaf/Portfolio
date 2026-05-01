@@ -75,12 +75,26 @@ npx vercel
 1. Push this repo to GitHub
 2. Import it at [vercel.com/new](https://vercel.com/new)
 3. Vercel auto-detects Vite — click Deploy
-4. Add environment variables if you want the Gemini-backed terminal enabled:
-   - `GEMINI_API_KEY` for the RAG assistant
-   - `GEMINI_MODEL` optional, defaults to `gemini-2.0-flash`
-   - `KV_REST_API_URL` and `KV_REST_API_TOKEN` for persistent viewer counts through Vercel KV / Upstash
+4. Add environment variables in **Vercel Dashboard → Settings → Environment Variables**:
+
+| Variable | Required | Description |
+|---|---|---|
+| `GEMINI_API_KEY` | Yes (for AI answers) | API key from [Google AI Studio](https://aistudio.google.com/app/apikey) |
+| `GEMINI_MODEL` | No | Defaults to `gemini-2.0-flash-lite`. Other options: `gemini-2.0-flash`, `gemini-1.5-flash`, `gemini-2.5-flash` |
+| `KV_REST_API_URL` | Yes (for persistent counter) | From Vercel Dashboard → Storage → KV → your database → `.env.local` tab |
+| `KV_REST_API_TOKEN` | Yes (for persistent counter) | Same location as `KV_REST_API_URL` |
+
+**Setting up Vercel KV (persistent viewer count):**
+1. Go to Vercel Dashboard → Storage → Create Database → KV
+2. Once created, open the database → `.env.local` tab
+3. Copy `KV_REST_API_URL` and `KV_REST_API_TOKEN` into your project's environment variables
+4. Redeploy for the variables to take effect
 
 For a no-payment setup, create the Gemini key in Google AI Studio on the free tier and do not enable billing on the project. Without these variables, the app still deploys: the terminal uses local fallback answers and the viewer API uses an instance-local count. The Gemini route also has an in-memory per-IP limiter before the external API call, so heavy traffic falls back to local portfolio context instead of burning API quota.
+
+**Verifying in production:**
+- RAG: Open the terminal and ask "What are Abdullah's skills?" — if `GEMINI_API_KEY` is set correctly, you get a clean AI answer; otherwise you get a structured fallback from portfolio data
+- Viewer count: Open the terminal in a private/incognito window and compare the count shown to the previous session; it should be higher by exactly 1 if KV is configured
 
 The `vercel.json` SPA rewrite rule is already configured.
 

@@ -1,3 +1,7 @@
 {
+  "functions": {
+    "api/rag-chat.ts": { "maxDuration": 15 },
+    "api/viewer-count.ts": { "maxDuration": 10 }
+  },
   "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }]
 }
