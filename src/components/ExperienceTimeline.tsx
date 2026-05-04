@@ -53,6 +53,7 @@ export default function ExperienceTimeline() {
                 background: cfg.cardBg,
                 color: cfg.cardText,
                 boxShadow: '0 4px 12px rgba(0,0,0,0.4)',
+                borderRadius: '12px',
               }}
               contentArrowStyle={{ borderRight: `7px solid ${cfg.arrowColor}` }}
               date={exp.dates}
