@@ -75,31 +75,31 @@ export default function HeroBanner() {
 
       {/* Content overlay */}
       <div
-        className="relative z-10 flex flex-col justify-end h-full px-6 sm:px-10 lg:px-16 pb-16 lg:pb-20"
+        className="relative z-10 flex flex-col justify-end h-full px-5 sm:px-10 lg:px-16 pb-10 sm:pb-16 lg:pb-20"
         style={{ minHeight: '100svh' }}
       >
-        <div className="max-w-2xl" style={{ paddingTop: 'var(--nav-height)' }}>
+        <div className="max-w-2xl w-full" style={{ paddingTop: 'var(--nav-height)' }}>
           {/* Location badge */}
-          <div ref={badgesRef} className="flex items-center gap-2 mb-4">
-            <span className="flex items-center gap-1.5 text-text-secondary text-sm">
+          <div ref={badgesRef} className="flex flex-wrap items-center gap-2 mb-3 sm:mb-4">
+            <span className="flex items-center gap-1.5 text-text-secondary text-xs sm:text-sm">
               <FaMapMarkerAlt size={12} className="text-netflix-red" />
               {profileData.location}
             </span>
-            <span className="text-text-secondary text-sm">·</span>
-            <span className="text-netflix-red text-sm font-semibold uppercase tracking-widest">
+            <span className="text-text-secondary text-xs sm:text-sm">·</span>
+            <span className="text-netflix-red text-xs sm:text-sm font-semibold uppercase tracking-widest">
               Featured Profile
             </span>
           </div>
 
           {/* Name */}
           <div ref={textRef}>
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black text-white leading-tight mb-3 tracking-tight">
+            <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black text-white leading-tight mb-2 sm:mb-3 tracking-tight">
               {profileData.name}
             </h1>
-            <p className="text-lg sm:text-xl lg:text-2xl text-text-primary font-medium mb-2 leading-snug">
+            <p className="text-base sm:text-xl lg:text-2xl text-text-primary font-medium mb-1 sm:mb-2 leading-snug">
               {profileData.headline}
             </p>
-            <p className="text-text-secondary text-sm sm:text-base mb-6">
+            <p className="text-text-secondary text-sm sm:text-base mb-4 sm:mb-6">
               CS @{' '}
               <a
                 href="https://ontariotechu.ca/"
@@ -110,7 +110,7 @@ export default function HeroBanner() {
                 Ontario Tech
               </a>
             </p>
-            <p className="text-text-primary text-sm sm:text-base leading-relaxed max-w-lg mb-8 line-clamp-3 lg:line-clamp-none whitespace-pre-line">
+            <p className="text-text-primary text-sm sm:text-base leading-relaxed max-w-lg mb-6 sm:mb-8">
               {profileData.bio}
             </p>
           </div>

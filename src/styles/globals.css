@@ -28,6 +28,7 @@
 
 html {
   scroll-behavior: smooth;
+  overflow-x: hidden;
 }
 
 body {
@@ -103,6 +104,14 @@ body {
 .vertical-timeline-element-content:hover {
   transform: scale(1.02);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4) !important;
+}
+@media (max-width: 480px) {
+  .vertical-timeline-element-content {
+    padding: 14px 16px !important;
+  }
+  .vertical-timeline-element-content-arrow {
+    border-right-width: 6px !important;
+  }
 }
 
 /* ── Experience page ─────────────────────────────────────────────────────── */
@@ -579,6 +588,127 @@ body {
   font-size: 2rem;
   color: #ff9900;
   animation: coffeeSwing 1s infinite ease-in-out;
+}
+
+/* ── Tablet (≤ 768px) ────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .timeline-title {
+    font-size: 1.65rem;
+    margin-bottom: 28px;
+  }
+  .category-title {
+    font-size: 1.5rem;
+    margin: 24px 0 16px;
+  }
+  .projects-grid {
+    grid-template-columns: 1fr;
+  }
+  .linkedin-badge-custom {
+    max-width: 100%;
+  }
+  .contact-link {
+    word-break: break-all;
+  }
+}
+
+/* ── Mobile small (≤ 480px) ──────────────────────────────────────── */
+@media (max-width: 480px) {
+  /* Timeline */
+  .timeline-container {
+    padding: 10px;
+    margin-top: 0.5rem;
+  }
+  .timeline-title {
+    font-size: 1.25rem;
+    margin-bottom: 20px;
+  }
+
+  /* Skills */
+  .category-title {
+    font-size: 1.25rem;
+    margin: 18px 0 12px;
+  }
+  .skills-container {
+    padding: 16px 12px 32px;
+  }
+  .skills-grid {
+    gap: 10px;
+    grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+  }
+  .skill-card {
+    padding: 14px 8px;
+  }
+  .skill-icon {
+    font-size: 1.6rem;
+  }
+  .skill-name {
+    font-size: 0.78rem;
+  }
+
+  /* Knowledge graph */
+  .knowledge-graph-section {
+    padding-top: calc(var(--nav-height) + 20px);
+    padding-bottom: 16px;
+  }
+  .knowledge-graph-canvas,
+  .knowledge-graph-svg {
+    min-height: 280px;
+  }
+  .knowledge-graph-title {
+    font-size: 1.4rem;
+  }
+  .knowledge-graph-panel {
+    padding: 14px;
+  }
+
+  /* Projects */
+  .projects-container {
+    padding: calc(var(--nav-height) + 20px) 12px 24px;
+  }
+  .projects-grid {
+    gap: 14px;
+  }
+  .project-details {
+    padding: 14px;
+  }
+
+  /* Contact */
+  .contact-container {
+    padding: calc(var(--nav-height) + 28px) 14px 36px;
+  }
+  .linkedin-badge-custom {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 16px;
+    gap: 12px;
+  }
+  .badge-content {
+    text-align: center;
+    width: 100%;
+  }
+  .badge-link {
+    width: 100%;
+    justify-content: center;
+  }
+  .contact-link {
+    font-size: 0.82rem;
+  }
+  .contact-item {
+    padding: 10px 16px;
+    width: 100%;
+    max-width: 340px;
+  }
+  .contact-header p {
+    font-size: 1rem;
+  }
+  .contact-fun {
+    margin-top: 20px;
+    font-size: 1rem;
+  }
+  .coffee-icon {
+    font-size: 1.6rem;
+  }
 }
 
 /* Reduced motion */

@@ -68,7 +68,7 @@ export default function Resume() {
       </div>
 
       {/* Mobile fallback banner */}
-      <div className="sm:hidden bg-netflix-dark-2 border-t border-white/5 px-4 py-4 flex justify-center gap-3">
+      <div className="md:hidden bg-netflix-dark-2 border-t border-white/5 px-4 py-4 flex justify-center gap-3">
         <a
           href={resumeViewerUrl}
           target="_blank"

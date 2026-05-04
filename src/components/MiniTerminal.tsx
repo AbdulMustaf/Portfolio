@@ -278,15 +278,15 @@ export default function MiniTerminal() {
     <>
       {/* ── Terminal popup ──────────────────────────────────────────────────── */}
       <div
-        className={`fixed bottom-[76px] right-6 z-50 transition-all duration-300 origin-bottom-right
+        className={`fixed bottom-[76px] right-3 sm:right-6 z-50 transition-all duration-300 origin-bottom-right
           ${isOpen
             ? 'opacity-100 scale-100 pointer-events-auto'
             : 'opacity-0 scale-95 pointer-events-none'
           }`}
         style={{
           width: maximized
-            ? 'min(720px, calc(100vw - 24px))'
-            : 'min(460px, calc(100vw - 24px))',
+            ? 'min(720px, calc(100vw - 16px))'
+            : 'min(460px, calc(100vw - 16px))',
         }}
         role="dialog"
         aria-label="Portfolio terminal"
@@ -331,8 +331,8 @@ export default function MiniTerminal() {
               height: minimized
                 ? '0px'
                 : maximized
-                  ? 'clamp(400px, 60vh, 520px)'
-                  : 'clamp(200px, 40vh, 290px)',
+                  ? 'clamp(300px, 55vh, 520px)'
+                  : 'clamp(180px, 35vh, 290px)',
             }}
           >
           {/* Scrollable inner */}
@@ -392,7 +392,7 @@ export default function MiniTerminal() {
         onClick={isOpen ? handleClose : handleOpen}
         aria-label={isOpen ? 'Close terminal' : 'Open terminal'}
         aria-expanded={isOpen}
-        className={`fixed bottom-6 right-6 z-50 flex items-center gap-2 px-4 py-2.5 rounded-lg
+        className={`fixed bottom-6 right-3 sm:right-6 z-50 flex items-center gap-2 px-4 py-2.5 rounded-lg
           text-white text-sm font-semibold shadow-lg transition-all duration-200
           hover:scale-105 active:scale-95 focus:outline-none focus-visible:ring-2
           focus-visible:ring-netflix-red/70 ${!isOpen ? 'animate-[redPulse_3s_ease-in-out_infinite]' : ''}`}
