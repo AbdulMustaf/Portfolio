@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import { FaGithub, FaExternalLinkAlt, FaTimes, FaPlay } from 'react-icons/fa'
 import type { Project } from '../data/projectsData'
+import { useGlossHover } from '../hooks/useGlossHover'
+import GlossOverlay from './GlossOverlay'
 
 interface Props {
   project: Project
@@ -8,12 +10,17 @@ interface Props {
 
 export default function ProjectCard({ project }: Props) {
   const [expanded, setExpanded] = useState(false)
+  const { containerRef, overlayRef, onMouseMove, onMouseEnter, onMouseLeave } = useGlossHover<HTMLElement>()
 
   return (
     <>
       {/* Card */}
       <article
-        className="relative flex-shrink-0 rounded-md overflow-hidden cursor-pointer group"
+        ref={containerRef}
+        onMouseMove={onMouseMove}
+        onMouseEnter={onMouseEnter}
+        onMouseLeave={onMouseLeave}
+        className="relative flex-shrink-0 rounded-md overflow-hidden cursor-pointer group gloss-hover"
         style={{ width: 'clamp(180px, 22vw, 280px)', aspectRatio: '16/9' }}
         onClick={() => setExpanded(true)}
         role="button"
@@ -65,6 +72,8 @@ export default function ProjectCard({ project }: Props) {
             <FaPlay className="text-white" size={14} />
           </div>
         </div>
+
+        <GlossOverlay ref={overlayRef} />
       </article>
 
       {/* Expanded modal */}

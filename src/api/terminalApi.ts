@@ -32,21 +32,40 @@ const ragData = {
 
 // ─── Viewer Count ─────────────────────────────────────────────────────────────
 
+// Generate or retrieve a unique visitor ID. This ensures each browser instance
+// is counted only once, even if the page is refreshed or the site is redeployed.
+function getOrCreateVisitorId(): string {
+  const key = '__portfolio_visitor_id'
+  let id = localStorage.getItem(key)
+  if (!id) {
+    // Generate a unique ID using crypto.randomUUID() if available, otherwise fallback
+    id = typeof crypto !== 'undefined' && crypto.randomUUID
+      ? crypto.randomUUID()
+      : `visitor-${Date.now()}-${Math.random().toString(36).slice(2, 11)}`
+    localStorage.setItem(key, id)
+  }
+  return id
+}
+
 export async function getViewerCount(): Promise<number> {
+  // Cache the result in sessionStorage to avoid multiple API calls in one session
   const sessionKey = '__portfolio_session_viewer_count'
-  const sessionCount = sessionStorage.getItem(sessionKey)
-  if (sessionCount) return parseInt(sessionCount, 10)
+  const cached = sessionStorage.getItem(sessionKey)
+  if (cached) return parseInt(cached, 10)
 
   try {
-    const res = await fetch('/api/viewer-count')
+    const visitorId = getOrCreateVisitorId()
+    const res = await fetch(`/api/viewer-count?visitorId=${encodeURIComponent(visitorId)}`)
     if (!res.ok) throw new Error('viewer-count failed')
     const data = await res.json() as { viewerCount?: number }
     if (typeof data.viewerCount !== 'number') throw new Error('viewer-count malformed')
     sessionStorage.setItem(sessionKey, String(data.viewerCount))
     return data.viewerCount
-  } catch {
+  } catch (error) {
+    console.warn('Failed to fetch viewer count from API:', error)
     await pause(250)
-    const key = '__portfolio_visitor_count'
+    // Fallback: use a simple localStorage counter (only used if API is unavailable)
+    const key = '__portfolio_visitor_count_fallback'
     const n = (parseInt(localStorage.getItem(key) ?? '0', 10)) + 1
     localStorage.setItem(key, String(n))
     sessionStorage.setItem(sessionKey, String(n))

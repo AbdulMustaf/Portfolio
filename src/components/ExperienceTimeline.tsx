@@ -1,11 +1,11 @@
 import 'react-vertical-timeline-component/style.min.css'
+import { useEffect, useRef } from 'react'
 import { VerticalTimeline, VerticalTimelineElement } from 'react-vertical-timeline-component'
 import { MdOutlineWork } from 'react-icons/md'
 import { IoSchool } from 'react-icons/io5'
 import { FaFlask, FaStar } from 'react-icons/fa'
 import { experienceData } from '../data/experienceData'
 
-// Mirrors the reference: work=blue, research=purple, education=pink
 const TYPE_CONFIG: Record<string, {
   cardBg: string
   cardText: string
@@ -36,9 +36,76 @@ const TYPE_CONFIG: Record<string, {
   },
 }
 
+const OVERLAY_STYLE: Partial<CSSStyleDeclaration> = {
+  position: 'absolute',
+  inset: '0',
+  borderRadius: 'inherit',
+  opacity: '0',
+  transition: 'opacity 0.25s ease',
+  pointerEvents: 'none',
+  zIndex: '10',
+}
+
 export default function ExperienceTimeline() {
+  const containerRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    const container = containerRef.current
+    if (!container) return
+
+    // Inject a real overlay div into each timeline card after mount
+    const cards = container.querySelectorAll<HTMLElement>('.vertical-timeline-element-content')
+    const overlays = new Map<HTMLElement, HTMLDivElement>()
+
+    cards.forEach((card) => {
+      const overlay = document.createElement('div')
+      Object.assign(overlay.style, OVERLAY_STYLE)
+      overlay.setAttribute('aria-hidden', 'true')
+      card.appendChild(overlay)
+      overlays.set(card, overlay)
+    })
+
+    const handleMouseMove = (e: MouseEvent) => {
+      const card = (e.target as Element).closest<HTMLElement>('.vertical-timeline-element-content')
+      if (!card) return
+      const overlay = overlays.get(card)
+      if (!overlay) return
+      const rect = card.getBoundingClientRect()
+      const x = ((e.clientX - rect.left) / rect.width) * 100
+      const y = ((e.clientY - rect.top) / rect.height) * 100
+      overlay.style.background = `radial-gradient(circle at ${x}% ${y}%, rgba(255,255,255,0.22) 0%, rgba(255,255,255,0.07) 38%, transparent 65%)`
+    }
+
+    const handleMouseEnter = (e: MouseEvent) => {
+      const card = e.currentTarget as HTMLElement
+      const overlay = overlays.get(card)
+      if (overlay) overlay.style.opacity = '1'
+    }
+
+    const handleMouseLeave = (e: MouseEvent) => {
+      const card = e.currentTarget as HTMLElement
+      const overlay = overlays.get(card)
+      if (overlay) overlay.style.opacity = '0'
+    }
+
+    container.addEventListener('mousemove', handleMouseMove)
+    cards.forEach((card) => {
+      card.addEventListener('mouseenter', handleMouseEnter)
+      card.addEventListener('mouseleave', handleMouseLeave)
+    })
+
+    return () => {
+      container.removeEventListener('mousemove', handleMouseMove)
+      cards.forEach((card) => {
+        card.removeEventListener('mouseenter', handleMouseEnter)
+        card.removeEventListener('mouseleave', handleMouseLeave)
+        overlays.get(card)?.remove()
+      })
+    }
+  }, [])
+
   return (
-    <div className="timeline-container">
+    <div ref={containerRef} className="timeline-container">
       <h2 className="timeline-title">📅 Work Experience &amp; Education Timeline</h2>
 
       <VerticalTimeline lineColor="#2f2f2f">
@@ -52,8 +119,9 @@ export default function ExperienceTimeline() {
               contentStyle={{
                 background: cfg.cardBg,
                 color: cfg.cardText,
-                boxShadow: '0 4px 12px rgba(0,0,0,0.4)',
+                boxShadow: '0 4px 20px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.35)',
                 borderRadius: '12px',
+                border: '1px solid rgba(255,255,255,0.18)',
               }}
               contentArrowStyle={{ borderRight: `7px solid ${cfg.arrowColor}` }}
               date={exp.dates}
@@ -104,7 +172,6 @@ export default function ExperienceTimeline() {
           )
         })}
 
-        {/* Closing star — same as reference */}
         <VerticalTimelineElement
           iconStyle={{ background: 'rgb(16, 204, 82)', color: '#fff' }}
           icon={<FaStar />}

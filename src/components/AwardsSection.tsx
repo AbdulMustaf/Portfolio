@@ -2,6 +2,8 @@ import { useRef, useEffect } from 'react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { FaTrophy, FaMedal, FaStar } from 'react-icons/fa'
+import { useGlossHover } from '../hooks/useGlossHover'
+import GlossOverlay from './GlossOverlay'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -32,7 +34,7 @@ const awards = [
     org: 'Ontario Tech University',
     year: '2022–2024',
     description:
-      'Recognized on the Dean\'s List for academic excellence across multiple semesters in the Computer Science program.',
+      "Recognized on the Dean's List for academic excellence across multiple semesters in the Computer Science program.",
     icon: <FaStar className="text-netflix-red" size={22} />,
     tier: 'academic',
   },
@@ -42,6 +44,31 @@ const tierBorder: Record<string, string> = {
   gold: 'border-yellow-500/30 hover:border-yellow-500/60',
   silver: 'border-gray-400/20 hover:border-gray-400/50',
   academic: 'border-netflix-red/20 hover:border-netflix-red/50',
+}
+
+function AwardCard({ award }: { award: typeof awards[number] }) {
+  const { containerRef, overlayRef, onMouseMove, onMouseEnter, onMouseLeave } = useGlossHover()
+  return (
+    <div
+      ref={containerRef}
+      onMouseMove={onMouseMove}
+      onMouseEnter={onMouseEnter}
+      onMouseLeave={onMouseLeave}
+      className={`award-card gloss-hover bg-netflix-dark-2 rounded-xl p-6 border transition-colors duration-300 ${tierBorder[award.tier]}`}
+    >
+      <div className="flex items-start gap-3 mb-3">
+        <div className="flex-shrink-0 mt-0.5">{award.icon}</div>
+        <div>
+          <h3 className="text-white font-bold text-sm leading-snug">{award.title}</h3>
+          <p className="text-text-secondary text-xs mt-0.5">
+            {award.org} · {award.year}
+          </p>
+        </div>
+      </div>
+      <p className="text-text-secondary text-sm leading-relaxed">{award.description}</p>
+      <GlossOverlay ref={overlayRef} />
+    </div>
+  )
 }
 
 export default function AwardsSection() {
@@ -71,21 +98,7 @@ export default function AwardsSection() {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         {awards.map((award) => (
-          <div
-            key={award.id}
-            className={`award-card bg-netflix-dark-2 rounded-xl p-6 border transition-colors duration-300 ${tierBorder[award.tier]}`}
-          >
-            <div className="flex items-start gap-3 mb-3">
-              <div className="flex-shrink-0 mt-0.5">{award.icon}</div>
-              <div>
-                <h3 className="text-white font-bold text-sm leading-snug">{award.title}</h3>
-                <p className="text-text-secondary text-xs mt-0.5">
-                  {award.org} · {award.year}
-                </p>
-              </div>
-            </div>
-            <p className="text-text-secondary text-sm leading-relaxed">{award.description}</p>
-          </div>
+          <AwardCard key={award.id} award={award} />
         ))}
       </div>
     </section>

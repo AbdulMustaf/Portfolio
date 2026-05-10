@@ -26,6 +26,15 @@
   padding: 0;
 }
 
+/* ── Gloss hover effect ──────────────────────────────────────────────────── */
+/* position + overflow are required so the real overlay div (GlossOverlay)
+   stays clipped to the card boundary. The spotlight gradient is applied
+   directly via JS on the overlay's style.background — no CSS vars needed. */
+.gloss-hover {
+  position: relative;
+  overflow: hidden;
+}
+
 html {
   scroll-behavior: smooth;
   overflow-x: hidden;
@@ -99,7 +108,27 @@ body {
   font-size: 0.85rem !important;
 }
 .vertical-timeline-element-content {
+  position: relative;
+  overflow: hidden;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.vertical-timeline-element-content::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    160deg,
+    rgba(255, 255, 255, 0.35) 0%,
+    rgba(255, 255, 255, 0.08) 45%,
+    rgba(0, 0, 0, 0.1) 100%
+  );
+  border-radius: inherit;
+  pointer-events: none;
+  z-index: 0;
+}
+.vertical-timeline-element-content > * {
+  position: relative;
+  z-index: 1;
 }
 .vertical-timeline-element-content:hover {
   transform: scale(1.02);

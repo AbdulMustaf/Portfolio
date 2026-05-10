@@ -1,4 +1,6 @@
 import type { ReactNode } from 'react'
+import { useGlossHover } from '../hooks/useGlossHover'
+import GlossOverlay from './GlossOverlay'
 import {
   SiPython, SiJavascript, SiTypescript, SiHtml5, SiCss,
   SiTailwindcss, SiVite, SiReact, SiFlask, SiNodedotjs,
@@ -86,6 +88,23 @@ function animatedSkillName(skill: string) {
   ))
 }
 
+function SkillCard({ skill }: { skill: string }) {
+  const { containerRef, overlayRef, onMouseMove, onMouseEnter, onMouseLeave } = useGlossHover()
+  return (
+    <div
+      ref={containerRef}
+      onMouseMove={onMouseMove}
+      onMouseEnter={onMouseEnter}
+      onMouseLeave={onMouseLeave}
+      className="skill-card gloss-hover"
+    >
+      <div className="skill-icon">{SKILL_ICONS[skill] ?? fallback}</div>
+      <h3 className="skill-name">{animatedSkillName(skill)}</h3>
+      <GlossOverlay ref={overlayRef} />
+    </div>
+  )
+}
+
 export default function SkillsGrid() {
   return (
     <div className="skills-container">
@@ -100,14 +119,7 @@ export default function SkillsGrid() {
 
           <div className="skills-grid">
             {cat.skills.map((skill) => (
-              <div key={skill} className="skill-card">
-                <div className="skill-icon">
-                  {SKILL_ICONS[skill] ?? fallback}
-                </div>
-                <h3 className="skill-name">
-                  {animatedSkillName(skill)}
-                </h3>
-              </div>
+              <SkillCard key={skill} skill={skill} />
             ))}
           </div>
         </div>
