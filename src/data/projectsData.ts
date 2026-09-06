@@ -14,6 +14,30 @@ export interface Project {
 
 export const projectsData: Project[] = [
   {
+    id: 'sts-phase-detector',
+    title: 'A Phase Detector Is Not a Clock',
+    subtitle: 'Sit-to-stand phase detection + a prespecified movement-control index',
+    description:
+      'A two-part study on the 5-repetition sit-to-stand test: a four-class phase detector on wearable kinematics, and proof that the same labels cannot be used as a measurement of time.',
+    longDescription:
+      'Part I trains a subject-independent four-class phase detector (sitting / rising / standing / lowering) on 100 Hz full-body kinematics from 32 adults, reaching macro-F1 0.735 strict and 0.852 at ±100 ms boundary tolerance under participant-grouped cross-validation — with a single pelvis sensor matching the full seven-sensor array to within 0.002. Part II shows the detector\'s ±175 ms anchor convention makes every standing dwell exactly 0.370 s against a measured 0.030 s; re-segmenting on velocity gates recovers 320/320 repetitions and lifts the same feature from ICC 0.334 to 0.726, enabling the RisingControlIndex — a prespecified, unfitted score separating age groups at AUC 0.771 (permutation p = 0.0033) and replicating 4/4 in an independent Parkinson\'s cohort. The project also retracts an earlier 0.867 result of my own, computing the ablation that collapses it to 0.100.',
+    tags: [
+      'Python',
+      'Scikit-learn',
+      'PyTorch',
+      'SciPy',
+      'Time-Series',
+      'Signal Processing',
+      'Biomechanics',
+      'Statistics',
+      'Research',
+      'LaTeX',
+    ],
+    image: '',
+    featured: true,
+    year: '2026',
+  },
+  {
     id: 'ai-compliance-guard',
     title: 'AI Compliance Guard',
     subtitle: 'AI-powered regulatory compliance automation',
