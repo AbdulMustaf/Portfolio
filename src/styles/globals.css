@@ -192,28 +192,30 @@ body {
   align-items: stretch;
 }
 .knowledge-graph-canvas {
-  min-height: 560px;
+  /* The graph lays itself out against whatever box this resolves to, so the
+     height is what actually controls node size / density per breakpoint. */
+  height: clamp(560px, 62vh, 700px);
   background:
     radial-gradient(circle at 50% 50%, rgba(229, 9, 20, 0.18), transparent 32%),
     linear-gradient(135deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
   border: 1px solid rgba(255,255,255,0.11);
   border-radius: 8px;
   overflow: hidden;
+  touch-action: pan-y;
 }
 .knowledge-graph-svg {
   display: block;
   width: 100%;
   height: 100%;
-  min-height: 560px;
 }
 .graph-edge {
-  stroke: rgba(255,255,255,0.14);
-  stroke-width: 1.4;
-  transition: stroke 0.2s ease, stroke-width 0.2s ease, opacity 0.2s ease;
+  stroke: rgba(255,255,255,0.13);
+  stroke-width: 1.3;
+  transition: stroke 0.24s ease, stroke-width 0.24s ease, opacity 0.24s ease;
 }
 .graph-edge.is-active {
-  stroke: rgba(255,255,255,0.7);
-  stroke-width: 2.8;
+  stroke: rgba(255,255,255,0.66);
+  stroke-width: 2.4;
 }
 .graph-node {
   cursor: pointer;
@@ -222,37 +224,50 @@ body {
 .graph-node circle {
   stroke: rgba(255,255,255,0.8);
   stroke-width: 1.5;
-  transition: transform 0.2s ease, stroke-width 0.2s ease, opacity 0.2s ease;
-  transform-box: fill-box;
-  transform-origin: center;
+  transition: stroke-width 0.24s ease, opacity 0.24s ease;
 }
-.graph-node:not(.is-connected) circle,
-.graph-node:not(.is-connected) .graph-node-label {
-  opacity: 0.36;
+/* Soft glow behind the focused node — cheaper than an SVG filter to repaint
+   every frame, and it reads the same against the dark canvas. */
+.graph-node .graph-node-halo {
+  stroke: none;
+  opacity: 0;
+  fill-opacity: 0.16;
+  pointer-events: none;
+  transition: opacity 0.28s ease;
+}
+.graph-node.is-active .graph-node-halo,
+.graph-node:focus-visible .graph-node-halo {
+  opacity: 1;
+}
+.graph-node:not(.is-connected) circle:not(.graph-node-halo),
+.graph-node-experience:not(.is-connected) .graph-node-label,
+.graph-node-category:not(.is-connected) .graph-node-label {
+  opacity: 0.5;
+}
+/* Skill labels are driven by the cursor-proximity loop (inline opacity), which
+   keeps 78 captions from stacking into noise. */
+.graph-node-skill .graph-node-label {
+  opacity: 0;
 }
 .graph-node.is-active circle,
 .graph-node:focus-visible circle {
-  stroke-width: 4;
-  transform: scale(1.16);
+  stroke-width: 3.2;
 }
 .graph-node-skill circle {
   fill-opacity: 0.88;
 }
 .graph-node-label {
   fill: #f5f5f5;
-  font-size: 13px;
   font-weight: 700;
   letter-spacing: 0;
   paint-order: stroke;
   stroke: rgba(20,20,20,0.92);
-  stroke-width: 4px;
   stroke-linejoin: round;
   pointer-events: none;
 }
 .graph-node-profile .graph-node-label {
   fill: #141414;
   stroke: transparent;
-  font-size: 15px;
 }
 .knowledge-graph-panel {
   background: #1e1e1e;
@@ -370,9 +385,8 @@ body {
   .knowledge-graph-layout {
     grid-template-columns: 1fr;
   }
-  .knowledge-graph-canvas,
-  .knowledge-graph-svg {
-    min-height: 500px;
+  .knowledge-graph-canvas {
+    height: clamp(520px, 64vh, 640px);
   }
 }
 
@@ -387,12 +401,8 @@ body {
   .knowledge-graph-subtitle {
     font-size: 0.9rem;
   }
-  .knowledge-graph-canvas,
-  .knowledge-graph-svg {
-    min-height: 430px;
-  }
-  .graph-node-label {
-    font-size: 11px;
+  .knowledge-graph-canvas {
+    height: clamp(460px, 72vh, 560px);
   }
 }
 
@@ -679,9 +689,8 @@ body {
     padding-top: calc(var(--nav-height) + 20px);
     padding-bottom: 16px;
   }
-  .knowledge-graph-canvas,
-  .knowledge-graph-svg {
-    min-height: 280px;
+  .knowledge-graph-canvas {
+    height: clamp(440px, 74vh, 540px);
   }
   .knowledge-graph-title {
     font-size: 1.4rem;
