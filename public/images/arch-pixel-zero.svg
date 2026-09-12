@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="1600" height="900" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" role="img" aria-label="A Chrome content script watches the feed DOM, queues images through a Flask API to Gemini and AI-or-Not, and maps normalized confidence scores back onto the live DOM nodes as risk badges and blur layers.">
+<title>A Chrome content script watches the feed DOM, queues images through a Flask API to Gemini and AI-or-Not, and maps normalized confidence scores back onto the live DOM nodes as risk badges and blur layers.</title>
+<defs>
+<radialGradient id="glow" cx="12%" cy="6%" r="70%">
+<stop offset="0%" stop-color="#e50914" stop-opacity="0.10"/>
+<stop offset="100%" stop-color="#e50914" stop-opacity="0"/>
+</radialGradient>
+<marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+<path d="M0 0 L10 5 L0 10 z" fill="#5a5a66"/>
+</marker>
+</defs>
+<rect width="1600" height="900" fill="#0f0f12"/>
+<rect width="1600" height="900" fill="url(#glow)"/>
+<rect x="60" y="62" width="8" height="70" rx="4" fill="#e50914"/>
+<text x="88.0" y="106.0" font-size="50" fill="#ececf2" font-weight="bold" text-anchor="start">Pixel Zero</text>
+<text x="88.0" y="146.0" font-size="25" fill="#8b8b96" font-weight="normal" text-anchor="start">Detects AI-generated imagery inside a live social feed, at scroll speed</text>
+<text x="1540.0" y="88.0" font-size="19" fill="#5a5a66" font-weight="bold" text-anchor="end" letter-spacing="3.5">SYSTEM ARCHITECTURE</text>
+<text x="1540.0" y="128.0" font-size="34" fill="#e50914" font-weight="bold" text-anchor="end">2024</text>
+<line x1="60" y1="192" x2="1540" y2="192" stroke="#2f2f3a" stroke-width="2"/>
+<circle cx="65.0" cy="194" r="5" fill="#e50914"/>
+<text x="80.0" y="201.0" font-size="22" fill="#ececf2" font-weight="bold" text-anchor="start" letter-spacing="2.5">FEED (in page)</text>
+<rect x="60.0" y="298.0" width="329.5" height="96.0" rx="10" fill="#1b1b21" stroke="#e50914" stroke-width="2"/>
+<rect x="60.0" y="298.0" width="4" height="96.0" rx="2" fill="#e50914"/>
+<text x="84.0" y="340.0" font-size="24" fill="#ffffff" font-weight="bold" text-anchor="start">riskRail.js</text>
+<text x="84.0" y="370.0" font-size="19" fill="#8b8b96" font-weight="normal" text-anchor="start">core content script, MV3</text>
+<rect x="60.0" y="410.0" width="329.5" height="96.0" rx="10" fill="#1b1b21" stroke="#2f2f3a" stroke-width="2"/>
+<text x="78.0" y="452.0" font-size="24" fill="#ececf2" font-weight="bold" text-anchor="start">MutationObserver</text>
+<text x="78.0" y="482.0" font-size="19" fill="#8b8b96" font-weight="normal" text-anchor="start">watches the feed DOM</text>
+<rect x="60.0" y="522.0" width="329.5" height="96.0" rx="10" fill="#1b1b21" stroke="#2f2f3a" stroke-width="2"/>
+<text x="78.0" y="564.0" font-size="24" fill="#ececf2" font-weight="bold" text-anchor="start">Image harvester</text>
+<text x="78.0" y="594.0" font-size="19" fill="#8b8b96" font-weight="normal" text-anchor="start">srcset → candidate list</text>
+<line x1="399.5" y1="458.0" x2="433.5" y2="458.0" stroke="#5a5a66" stroke-width="3" marker-end="url(#arrow)"/>
+<circle cx="448.5" cy="194" r="5" fill="#e50914"/>
+<text x="463.5" y="201.0" font-size="22" fill="#ececf2" font-weight="bold" text-anchor="start" letter-spacing="2.5">PIPELINE</text>
+<rect x="443.5" y="298.0" width="329.5" height="96.0" rx="10" fill="#1b1b21" stroke="#2f2f3a" stroke-width="2"/>
+<text x="461.5" y="340.0" font-size="23" fill="#ececf2" font-weight="bold" text-anchor="start">Async fingerprint queue</text>
+<text x="461.5" y="370.0" font-size="19" fill="#8b8b96" font-weight="normal" text-anchor="start">dedupe · throttle · retry</text>
+<rect x="443.5" y="410.0" width="329.5" height="96.0" rx="10" fill="#1b1b21" stroke="#2f2f3a" stroke-width="2"/>
+<text x="461.5" y="452.0" font-size="24" fill="#ececf2" font-weight="bold" text-anchor="start">Flask API</text>
+<text x="461.5" y="482.0" font-size="19" fill="#8b8b96" font-weight="normal" text-anchor="start">/analyze endpoint</text>
+<rect x="443.5" y="522.0" width="329.5" height="96.0" rx="10" fill="#1b1b21" stroke="#2f2f3a" stroke-width="2"/>
+<text x="461.5" y="564.0" font-size="24" fill="#ececf2" font-weight="bold" text-anchor="start">Response normalizer</text>
+<text x="461.5" y="594.0" font-size="19" fill="#8b8b96" font-weight="normal" text-anchor="start">providers → one score</text>
+<line x1="783.0" y1="458.0" x2="817.0" y2="458.0" stroke="#5a5a66" stroke-width="3" marker-end="url(#arrow)"/>
+<circle cx="832.0" cy="194" r="5" fill="#e50914"/>
+<text x="847.0" y="201.0" font-size="22" fill="#ececf2" font-weight="bold" text-anchor="start" letter-spacing="2.5">DETECTORS</text>
+<rect x="827.0" y="298.0" width="329.5" height="96.0" rx="10" fill="#1b1b21" stroke="#2f2f3a" stroke-width="2"/>
+<text x="845.0" y="340.0" font-size="24" fill="#ececf2" font-weight="bold" text-anchor="start">Gemini API</text>
+<text x="845.0" y="370.0" font-size="19" fill="#8b8b96" font-weight="normal" text-anchor="start">vision-model reasoning</text>
+<rect x="827.0" y="410.0" width="329.5" height="96.0" rx="10" fill="#1b1b21" stroke="#2f2f3a" stroke-width="2"/>
+<text x="845.0" y="452.0" font-size="24" fill="#ececf2" font-weight="bold" text-anchor="start">AI-or-Not API</text>
+<text x="845.0" y="482.0" font-size="19" fill="#8b8b96" font-weight="normal" text-anchor="start">synthetic-media classifier</text>
+<rect x="827.0" y="522.0" width="329.5" height="96.0" rx="10" fill="#1b1b21" stroke="#e50914" stroke-width="2"/>
+<rect x="827.0" y="522.0" width="4" height="96.0" rx="2" fill="#e50914"/>
+<text x="851.0" y="564.0" font-size="24" fill="#ffffff" font-weight="bold" text-anchor="start">Confidence mapping</text>
+<text x="851.0" y="594.0" font-size="19" fill="#8b8b96" font-weight="normal" text-anchor="start">score → risk tier</text>
+<line x1="1166.5" y1="458.0" x2="1200.5" y2="458.0" stroke="#5a5a66" stroke-width="3" marker-end="url(#arrow)"/>
+<circle cx="1215.5" cy="194" r="5" fill="#e50914"/>
+<text x="1230.5" y="201.0" font-size="22" fill="#ececf2" font-weight="bold" text-anchor="start" letter-spacing="2.5">OVERLAY</text>
+<rect x="1210.5" y="298.0" width="329.5" height="96.0" rx="10" fill="#1b1b21" stroke="#e50914" stroke-width="2"/>
+<rect x="1210.5" y="298.0" width="4" height="96.0" rx="2" fill="#e50914"/>
+<text x="1234.5" y="340.0" font-size="24" fill="#ffffff" font-weight="bold" text-anchor="start">Risk badge</text>
+<text x="1234.5" y="370.0" font-size="19" fill="#8b8b96" font-weight="normal" text-anchor="start">bound to the live DOM node</text>
+<rect x="1210.5" y="410.0" width="329.5" height="96.0" rx="10" fill="#1b1b21" stroke="#2f2f3a" stroke-width="2"/>
+<text x="1228.5" y="452.0" font-size="24" fill="#ececf2" font-weight="bold" text-anchor="start">NSFW blur layer</text>
+<text x="1228.5" y="482.0" font-size="19" fill="#8b8b96" font-weight="normal" text-anchor="start">opt-in reveal</text>
+<rect x="1210.5" y="522.0" width="329.5" height="96.0" rx="10" fill="#1b1b21" stroke="#2f2f3a" stroke-width="2"/>
+<text x="1228.5" y="564.0" font-size="24" fill="#ececf2" font-weight="bold" text-anchor="start">Lasso tool</text>
+<text x="1228.5" y="594.0" font-size="19" fill="#8b8b96" font-weight="normal" text-anchor="start">verify a region on demand</text>
+<rect x="60" y="700" width="1480" height="58" rx="10" fill="none" stroke="#e50914" stroke-width="2" stroke-dasharray="10 8" opacity="0.75"/>
+<text x="800.0" y="737.0" font-size="19" fill="#8b8b96" font-weight="normal" text-anchor="middle">The digital trust gap — verification has to happen where the image is seen, at feed scroll speed, without asking the user to leave the page</text>
+<line x1="60" y1="784" x2="1540" y2="784" stroke="#2f2f3a" stroke-width="2"/>
+<text x="245.0" y="840.0" font-size="46" fill="#e50914" font-weight="bold" text-anchor="middle">QHacks</text>
+<text x="245.0" y="872.0" font-size="20" fill="#8b8b96" font-weight="normal" text-anchor="middle">hackathon build</text>
+<text x="615.0" y="840.0" font-size="46" fill="#e50914" font-weight="bold" text-anchor="middle">2</text>
+<text x="615.0" y="872.0" font-size="20" fill="#8b8b96" font-weight="normal" text-anchor="middle">detection providers</text>
+<text x="985.0" y="840.0" font-size="46" fill="#e50914" font-weight="bold" text-anchor="middle">MV3</text>
+<text x="985.0" y="872.0" font-size="20" fill="#8b8b96" font-weight="normal" text-anchor="middle">Chrome extension</text>
+<text x="1355.0" y="840.0" font-size="46" fill="#e50914" font-weight="bold" text-anchor="middle">Real time</text>
+<text x="1355.0" y="872.0" font-size="20" fill="#8b8b96" font-weight="normal" text-anchor="middle">per-image verdicts</text>
+</svg>

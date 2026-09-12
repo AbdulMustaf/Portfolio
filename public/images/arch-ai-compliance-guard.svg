@@ -1,0 +1,90 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="1600" height="900" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" role="img" aria-label="A browser extension intercepts prompts on ChatGPT and Copilot, sends them to a Flask validation API bound to localhost, and returns violations plus an autocorrected prompt — nothing leaves the device.">
+<title>A browser extension intercepts prompts on ChatGPT and Copilot, sends them to a Flask validation API bound to localhost, and returns violations plus an autocorrected prompt — nothing leaves the device.</title>
+<defs>
+<radialGradient id="glow" cx="12%" cy="6%" r="70%">
+<stop offset="0%" stop-color="#e50914" stop-opacity="0.10"/>
+<stop offset="100%" stop-color="#e50914" stop-opacity="0"/>
+</radialGradient>
+<marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+<path d="M0 0 L10 5 L0 10 z" fill="#5a5a66"/>
+</marker>
+</defs>
+<rect width="1600" height="900" fill="#0f0f12"/>
+<rect width="1600" height="900" fill="url(#glow)"/>
+<rect x="60" y="62" width="8" height="70" rx="4" fill="#e50914"/>
+<text x="88.0" y="106.0" font-size="50" fill="#ececf2" font-weight="bold" text-anchor="start">AI Compliance Guard</text>
+<text x="88.0" y="146.0" font-size="23" fill="#8b8b96" font-weight="normal" text-anchor="start">Intercepts prompts before they leave the device and validates them against org policy</text>
+<text x="1540.0" y="88.0" font-size="19" fill="#5a5a66" font-weight="bold" text-anchor="end" letter-spacing="3.5">SYSTEM ARCHITECTURE</text>
+<text x="1540.0" y="128.0" font-size="34" fill="#e50914" font-weight="bold" text-anchor="end">2024</text>
+<line x1="60" y1="192" x2="1540" y2="192" stroke="#2f2f3a" stroke-width="2"/>
+<circle cx="65.0" cy="194" r="5" fill="#e50914"/>
+<text x="80.0" y="201.0" font-size="22" fill="#ececf2" font-weight="bold" text-anchor="start" letter-spacing="2.5">BROWSER (MV3)</text>
+<rect x="60.0" y="242.0" width="329.5" height="96.0" rx="10" fill="#1b1b21" stroke="#e50914" stroke-width="2"/>
+<rect x="60.0" y="242.0" width="4" height="96.0" rx="2" fill="#e50914"/>
+<text x="84.0" y="284.0" font-size="24" fill="#ffffff" font-weight="bold" text-anchor="start">submit-interceptor</text>
+<text x="84.0" y="314.0" font-size="19" fill="#8b8b96" font-weight="normal" text-anchor="start">blocks send before egress</text>
+<rect x="60.0" y="354.0" width="329.5" height="96.0" rx="10" fill="#1b1b21" stroke="#2f2f3a" stroke-width="2"/>
+<text x="78.0" y="396.0" font-size="24" fill="#ececf2" font-weight="bold" text-anchor="start">prompt-extractor</text>
+<text x="78.0" y="426.0" font-size="19" fill="#8b8b96" font-weight="normal" text-anchor="start">text + PDF attachments</text>
+<rect x="60.0" y="466.0" width="329.5" height="96.0" rx="10" fill="#1b1b21" stroke="#2f2f3a" stroke-width="2"/>
+<text x="78.0" y="508.0" font-size="24" fill="#ececf2" font-weight="bold" text-anchor="start">adapters/</text>
+<text x="78.0" y="538.0" font-size="19" fill="#8b8b96" font-weight="normal" text-anchor="start">ChatGPT · Microsoft Copilot</text>
+<rect x="60.0" y="578.0" width="329.5" height="96.0" rx="10" fill="#1b1b21" stroke="#2f2f3a" stroke-width="2"/>
+<text x="78.0" y="620.0" font-size="24" fill="#ececf2" font-weight="bold" text-anchor="start">service-worker.js</text>
+<text x="78.0" y="650.0" font-size="19" fill="#8b8b96" font-weight="normal" text-anchor="start">background messaging</text>
+<line x1="399.5" y1="458.0" x2="433.5" y2="458.0" stroke="#5a5a66" stroke-width="3" marker-end="url(#arrow)"/>
+<circle cx="448.5" cy="194" r="5" fill="#e50914"/>
+<text x="463.5" y="201.0" font-size="22" fill="#ececf2" font-weight="bold" text-anchor="start" letter-spacing="2.5">LOCAL API :5000</text>
+<rect x="443.5" y="242.0" width="329.5" height="96.0" rx="10" fill="#1b1b21" stroke="#2f2f3a" stroke-width="2"/>
+<text x="461.5" y="284.0" font-size="24" fill="#ececf2" font-weight="bold" text-anchor="start">POST /validate</text>
+<text x="461.5" y="314.0" font-size="19" fill="#8b8b96" font-weight="normal" text-anchor="start">Flask, bound to 127.0.0.1</text>
+<rect x="443.5" y="354.0" width="329.5" height="96.0" rx="10" fill="#1b1b21" stroke="#2f2f3a" stroke-width="2"/>
+<text x="461.5" y="396.0" font-size="24" fill="#ececf2" font-weight="bold" text-anchor="start">rule_based.py</text>
+<text x="461.5" y="426.0" font-size="19" fill="#8b8b96" font-weight="normal" text-anchor="start">policy ruleset matching</text>
+<rect x="443.5" y="466.0" width="329.5" height="96.0" rx="10" fill="#1b1b21" stroke="#2f2f3a" stroke-width="2"/>
+<text x="461.5" y="508.0" font-size="24" fill="#ececf2" font-weight="bold" text-anchor="start">llm_validator.py</text>
+<text x="461.5" y="538.0" font-size="19" fill="#8b8b96" font-weight="normal" text-anchor="start">local LLM · Ollama phi4-mini</text>
+<rect x="443.5" y="578.0" width="329.5" height="96.0" rx="10" fill="#1b1b21" stroke="#2f2f3a" stroke-width="2"/>
+<text x="461.5" y="620.0" font-size="24" fill="#ececf2" font-weight="bold" text-anchor="start">CORS allowlist</text>
+<text x="461.5" y="650.0" font-size="19" fill="#8b8b96" font-weight="normal" text-anchor="start">extension origin only</text>
+<line x1="783.0" y1="458.0" x2="817.0" y2="458.0" stroke="#5a5a66" stroke-width="3" marker-end="url(#arrow)"/>
+<circle cx="832.0" cy="194" r="5" fill="#e50914"/>
+<text x="847.0" y="201.0" font-size="22" fill="#ececf2" font-weight="bold" text-anchor="start" letter-spacing="2.5">VERDICT</text>
+<rect x="827.0" y="242.0" width="329.5" height="96.0" rx="10" fill="#1b1b21" stroke="#2f2f3a" stroke-width="2"/>
+<text x="845.0" y="284.0" font-size="24" fill="#ececf2" font-weight="bold" text-anchor="start">Violations + spans</text>
+<text x="845.0" y="314.0" font-size="19" fill="#8b8b96" font-weight="normal" text-anchor="start">what was flagged, and where</text>
+<rect x="827.0" y="354.0" width="329.5" height="96.0" rx="10" fill="#1b1b21" stroke="#e50914" stroke-width="2"/>
+<rect x="827.0" y="354.0" width="4" height="96.0" rx="2" fill="#e50914"/>
+<text x="851.0" y="396.0" font-size="24" fill="#ffffff" font-weight="bold" text-anchor="start">Autocorrected prompt</text>
+<text x="851.0" y="426.0" font-size="19" fill="#8b8b96" font-weight="normal" text-anchor="start">a safer version, offered</text>
+<rect x="827.0" y="466.0" width="329.5" height="96.0" rx="10" fill="#1b1b21" stroke="#2f2f3a" stroke-width="2"/>
+<text x="845.0" y="508.0" font-size="24" fill="#ececf2" font-weight="bold" text-anchor="start">ui-component.js</text>
+<text x="845.0" y="538.0" font-size="19" fill="#8b8b96" font-weight="normal" text-anchor="start">inline warning overlay</text>
+<rect x="827.0" y="578.0" width="329.5" height="96.0" rx="10" fill="#1b1b21" stroke="#2f2f3a" stroke-width="2"/>
+<text x="845.0" y="620.0" font-size="24" fill="#ececf2" font-weight="bold" text-anchor="start">audit_logger</text>
+<text x="845.0" y="650.0" font-size="19" fill="#8b8b96" font-weight="normal" text-anchor="start">prompt_audit_log.xlsx</text>
+<line x1="1166.5" y1="458.0" x2="1200.5" y2="458.0" stroke="#5a5a66" stroke-width="3" marker-end="url(#arrow)"/>
+<circle cx="1215.5" cy="194" r="5" fill="#e50914"/>
+<text x="1230.5" y="201.0" font-size="22" fill="#ececf2" font-weight="bold" text-anchor="start" letter-spacing="2.5">OUTCOME</text>
+<rect x="1210.5" y="298.0" width="329.5" height="96.0" rx="10" fill="#1b1b21" stroke="#2f2f3a" stroke-width="2"/>
+<text x="1228.5" y="340.0" font-size="24" fill="#ececf2" font-weight="bold" text-anchor="start">Safe → forwarded</text>
+<text x="1228.5" y="370.0" font-size="19" fill="#8b8b96" font-weight="normal" text-anchor="start">reaches the AI tool intact</text>
+<rect x="1210.5" y="410.0" width="329.5" height="96.0" rx="10" fill="#1b1b21" stroke="#e50914" stroke-width="2"/>
+<rect x="1210.5" y="410.0" width="4" height="96.0" rx="2" fill="#e50914"/>
+<text x="1234.5" y="452.0" font-size="24" fill="#ffffff" font-weight="bold" text-anchor="start">Flagged → blocked</text>
+<text x="1234.5" y="482.0" font-size="19" fill="#8b8b96" font-weight="normal" text-anchor="start">until the user edits</text>
+<rect x="1210.5" y="522.0" width="329.5" height="96.0" rx="10" fill="#1b1b21" stroke="#2f2f3a" stroke-width="2"/>
+<text x="1228.5" y="564.0" font-size="24" fill="#ececf2" font-weight="bold" text-anchor="start">IT audit trail</text>
+<text x="1228.5" y="594.0" font-size="19" fill="#8b8b96" font-weight="normal" text-anchor="start">platform · type · accepted</text>
+<rect x="60" y="700" width="1480" height="58" rx="10" fill="none" stroke="#e50914" stroke-width="2" stroke-dasharray="10 8" opacity="0.75"/>
+<text x="800.0" y="737.0" font-size="17" fill="#8b8b96" font-weight="normal" text-anchor="middle">Trust boundary — validation, inference and logging all run on the employee’s device; no prompt, attachment or log ever reaches external infrastructure</text>
+<line x1="60" y1="784" x2="1540" y2="784" stroke="#2f2f3a" stroke-width="2"/>
+<text x="245.0" y="840.0" font-size="46" fill="#e50914" font-weight="bold" text-anchor="middle">0</text>
+<text x="245.0" y="872.0" font-size="20" fill="#8b8b96" font-weight="normal" text-anchor="middle">bytes sent externally</text>
+<text x="615.0" y="840.0" font-size="46" fill="#e50914" font-weight="bold" text-anchor="middle">2</text>
+<text x="615.0" y="872.0" font-size="20" fill="#8b8b96" font-weight="normal" text-anchor="middle">validator backends</text>
+<text x="985.0" y="840.0" font-size="46" fill="#e50914" font-weight="bold" text-anchor="middle">2</text>
+<text x="985.0" y="872.0" font-size="20" fill="#8b8b96" font-weight="normal" text-anchor="middle">platform adapters</text>
+<text x="1355.0" y="840.0" font-size="46" fill="#e50914" font-weight="bold" text-anchor="middle">FIPPA</text>
+<text x="1355.0" y="872.0" font-size="20" fill="#8b8b96" font-weight="normal" text-anchor="middle">Bill 194 + AI Directive</text>
+</svg>

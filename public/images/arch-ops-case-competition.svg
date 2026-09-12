@@ -1,0 +1,84 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="1600" height="900" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" role="img" aria-label="A service blueprint: research findings drive a frontstage citizen intake layer, backed by backstage eligibility, routing and ministry systems of record, then validated with usability testing and a stakeholder pitch.">
+<title>A service blueprint: research findings drive a frontstage citizen intake layer, backed by backstage eligibility, routing and ministry systems of record, then validated with usability testing and a stakeholder pitch.</title>
+<defs>
+<radialGradient id="glow" cx="12%" cy="6%" r="70%">
+<stop offset="0%" stop-color="#e50914" stop-opacity="0.10"/>
+<stop offset="100%" stop-color="#e50914" stop-opacity="0"/>
+</radialGradient>
+<marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+<path d="M0 0 L10 5 L0 10 z" fill="#5a5a66"/>
+</marker>
+</defs>
+<rect width="1600" height="900" fill="#0f0f12"/>
+<rect width="1600" height="900" fill="url(#glow)"/>
+<rect x="60" y="62" width="8" height="70" rx="4" fill="#e50914"/>
+<text x="88.0" y="106.0" font-size="50" fill="#ececf2" font-weight="bold" text-anchor="start">OPS Case Competition</text>
+<text x="88.0" y="146.0" font-size="25" fill="#8b8b96" font-weight="normal" text-anchor="start">Service blueprint for a citizen-facing government digital service — 1st place</text>
+<text x="1540.0" y="88.0" font-size="19" fill="#5a5a66" font-weight="bold" text-anchor="end" letter-spacing="3.5">SYSTEM ARCHITECTURE</text>
+<text x="1540.0" y="128.0" font-size="34" fill="#e50914" font-weight="bold" text-anchor="end">2023</text>
+<line x1="60" y1="192" x2="1540" y2="192" stroke="#2f2f3a" stroke-width="2"/>
+<circle cx="65.0" cy="194" r="5" fill="#e50914"/>
+<text x="80.0" y="201.0" font-size="22" fill="#ececf2" font-weight="bold" text-anchor="start" letter-spacing="2.5">DISCOVERY</text>
+<rect x="60.0" y="298.0" width="329.5" height="96.0" rx="10" fill="#1b1b21" stroke="#2f2f3a" stroke-width="2"/>
+<text x="78.0" y="340.0" font-size="24" fill="#ececf2" font-weight="bold" text-anchor="start">Stakeholder interviews</text>
+<text x="78.0" y="370.0" font-size="19" fill="#8b8b96" font-weight="normal" text-anchor="start">frontline and policy staff</text>
+<rect x="60.0" y="410.0" width="329.5" height="96.0" rx="10" fill="#1b1b21" stroke="#2f2f3a" stroke-width="2"/>
+<text x="78.0" y="452.0" font-size="24" fill="#ececf2" font-weight="bold" text-anchor="start">Journey mapping</text>
+<text x="78.0" y="482.0" font-size="19" fill="#8b8b96" font-weight="normal" text-anchor="start">where citizens drop off</text>
+<rect x="60.0" y="522.0" width="329.5" height="96.0" rx="10" fill="#1b1b21" stroke="#2f2f3a" stroke-width="2"/>
+<text x="78.0" y="564.0" font-size="24" fill="#ececf2" font-weight="bold" text-anchor="start">Constraint scan</text>
+<text x="78.0" y="594.0" font-size="19" fill="#8b8b96" font-weight="normal" text-anchor="start">policy · access · legacy</text>
+<line x1="399.5" y1="458.0" x2="433.5" y2="458.0" stroke="#5a5a66" stroke-width="3" marker-end="url(#arrow)"/>
+<circle cx="448.5" cy="194" r="5" fill="#e50914"/>
+<text x="463.5" y="201.0" font-size="22" fill="#ececf2" font-weight="bold" text-anchor="start" letter-spacing="2.5">FRONTSTAGE</text>
+<rect x="443.5" y="242.0" width="329.5" height="96.0" rx="10" fill="#1b1b21" stroke="#e50914" stroke-width="2"/>
+<rect x="443.5" y="242.0" width="4" height="96.0" rx="2" fill="#e50914"/>
+<text x="467.5" y="284.0" font-size="24" fill="#ffffff" font-weight="bold" text-anchor="start">Responsive intake</text>
+<text x="467.5" y="314.0" font-size="19" fill="#8b8b96" font-weight="normal" text-anchor="start">one guided flow</text>
+<rect x="443.5" y="354.0" width="329.5" height="96.0" rx="10" fill="#1b1b21" stroke="#2f2f3a" stroke-width="2"/>
+<text x="461.5" y="396.0" font-size="24" fill="#ececf2" font-weight="bold" text-anchor="start">Plain-language forms</text>
+<text x="461.5" y="426.0" font-size="19" fill="#8b8b96" font-weight="normal" text-anchor="start">progressive disclosure</text>
+<rect x="443.5" y="466.0" width="329.5" height="96.0" rx="10" fill="#1b1b21" stroke="#2f2f3a" stroke-width="2"/>
+<text x="461.5" y="508.0" font-size="24" fill="#ececf2" font-weight="bold" text-anchor="start">AODA accessibility</text>
+<text x="461.5" y="538.0" font-size="19" fill="#8b8b96" font-weight="normal" text-anchor="start">WCAG as acceptance criteria</text>
+<rect x="443.5" y="578.0" width="329.5" height="96.0" rx="10" fill="#1b1b21" stroke="#2f2f3a" stroke-width="2"/>
+<text x="461.5" y="620.0" font-size="24" fill="#ececf2" font-weight="bold" text-anchor="start">Status + notifications</text>
+<text x="461.5" y="650.0" font-size="19" fill="#8b8b96" font-weight="normal" text-anchor="start">no phone call needed</text>
+<line x1="783.0" y1="458.0" x2="817.0" y2="458.0" stroke="#5a5a66" stroke-width="3" marker-end="url(#arrow)"/>
+<circle cx="832.0" cy="194" r="5" fill="#e50914"/>
+<text x="847.0" y="201.0" font-size="22" fill="#ececf2" font-weight="bold" text-anchor="start" letter-spacing="2.5">BACKSTAGE</text>
+<rect x="827.0" y="242.0" width="329.5" height="96.0" rx="10" fill="#1b1b21" stroke="#2f2f3a" stroke-width="2"/>
+<text x="845.0" y="284.0" font-size="24" fill="#ececf2" font-weight="bold" text-anchor="start">Eligibility rules</text>
+<text x="845.0" y="314.0" font-size="19" fill="#8b8b96" font-weight="normal" text-anchor="start">policy encoded once</text>
+<rect x="827.0" y="354.0" width="329.5" height="96.0" rx="10" fill="#1b1b21" stroke="#2f2f3a" stroke-width="2"/>
+<text x="845.0" y="396.0" font-size="24" fill="#ececf2" font-weight="bold" text-anchor="start">Case routing</text>
+<text x="845.0" y="426.0" font-size="19" fill="#8b8b96" font-weight="normal" text-anchor="start">to the owning program</text>
+<rect x="827.0" y="466.0" width="329.5" height="96.0" rx="10" fill="#1b1b21" stroke="#2f2f3a" stroke-width="2"/>
+<text x="845.0" y="508.0" font-size="24" fill="#ececf2" font-weight="bold" text-anchor="start">Records of authority</text>
+<text x="845.0" y="538.0" font-size="19" fill="#8b8b96" font-weight="normal" text-anchor="start">ministry systems of record</text>
+<rect x="827.0" y="578.0" width="329.5" height="96.0" rx="10" fill="#1b1b21" stroke="#2f2f3a" stroke-width="2"/>
+<text x="845.0" y="620.0" font-size="24" fill="#ececf2" font-weight="bold" text-anchor="start">Audit + reporting</text>
+<text x="845.0" y="650.0" font-size="19" fill="#8b8b96" font-weight="normal" text-anchor="start">service metrics by default</text>
+<line x1="1166.5" y1="458.0" x2="1200.5" y2="458.0" stroke="#5a5a66" stroke-width="3" marker-end="url(#arrow)"/>
+<circle cx="1215.5" cy="194" r="5" fill="#e50914"/>
+<text x="1230.5" y="201.0" font-size="22" fill="#ececf2" font-weight="bold" text-anchor="start" letter-spacing="2.5">VALIDATION</text>
+<rect x="1210.5" y="298.0" width="329.5" height="96.0" rx="10" fill="#1b1b21" stroke="#2f2f3a" stroke-width="2"/>
+<text x="1228.5" y="340.0" font-size="24" fill="#ececf2" font-weight="bold" text-anchor="start">Usability testing</text>
+<text x="1228.5" y="370.0" font-size="19" fill="#8b8b96" font-weight="normal" text-anchor="start">iterate on real tasks</text>
+<rect x="1210.5" y="410.0" width="329.5" height="96.0" rx="10" fill="#1b1b21" stroke="#2f2f3a" stroke-width="2"/>
+<text x="1228.5" y="452.0" font-size="24" fill="#ececf2" font-weight="bold" text-anchor="start">Prototype walkthrough</text>
+<text x="1228.5" y="482.0" font-size="19" fill="#8b8b96" font-weight="normal" text-anchor="start">clickable, end to end</text>
+<rect x="1210.5" y="522.0" width="329.5" height="96.0" rx="10" fill="#1b1b21" stroke="#e50914" stroke-width="2"/>
+<rect x="1210.5" y="522.0" width="4" height="96.0" rx="2" fill="#e50914"/>
+<text x="1234.5" y="564.0" font-size="24" fill="#ffffff" font-weight="bold" text-anchor="start">Stakeholder pitch</text>
+<text x="1234.5" y="594.0" font-size="19" fill="#8b8b96" font-weight="normal" text-anchor="start">senior OPS leadership</text>
+<rect x="60" y="700" width="1480" height="58" rx="10" fill="none" stroke="#e50914" stroke-width="2" stroke-dasharray="10 8" opacity="0.75"/>
+<text x="800.0" y="737.0" font-size="19" fill="#8b8b96" font-weight="normal" text-anchor="middle">Human-centred design loop — every backstage decision traces to a frontstage failure observed in research, then gets re-tested with citizens</text>
+<line x1="60" y1="784" x2="1540" y2="784" stroke="#2f2f3a" stroke-width="2"/>
+<text x="306.7" y="840.0" font-size="46" fill="#e50914" font-weight="bold" text-anchor="middle">1st</text>
+<text x="306.7" y="872.0" font-size="20" fill="#8b8b96" font-weight="normal" text-anchor="middle">place, OPS competition</text>
+<text x="800.0" y="840.0" font-size="46" fill="#e50914" font-weight="bold" text-anchor="middle">4</text>
+<text x="800.0" y="872.0" font-size="20" fill="#8b8b96" font-weight="normal" text-anchor="middle">research-to-pitch stages</text>
+<text x="1293.3" y="840.0" font-size="46" fill="#e50914" font-weight="bold" text-anchor="middle">AODA</text>
+<text x="1293.3" y="872.0" font-size="20" fill="#8b8b96" font-weight="normal" text-anchor="middle">accessibility baseline</text>
+</svg>

@@ -1,0 +1,100 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="1600" height="900" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" role="img" aria-label="Two-part research pipeline: wearable kinematics feed a four-class phase detector, whose labels are then re-segmented on velocity gates to build a prespecified movement-control index.">
+<title>Two-part research pipeline: wearable kinematics feed a four-class phase detector, whose labels are then re-segmented on velocity gates to build a prespecified movement-control index.</title>
+<defs>
+<radialGradient id="glow" cx="12%" cy="6%" r="70%">
+<stop offset="0%" stop-color="#e50914" stop-opacity="0.10"/>
+<stop offset="100%" stop-color="#e50914" stop-opacity="0"/>
+</radialGradient>
+<marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+<path d="M0 0 L10 5 L0 10 z" fill="#5a5a66"/>
+</marker>
+</defs>
+<rect width="1600" height="900" fill="#0f0f12"/>
+<rect width="1600" height="900" fill="url(#glow)"/>
+<rect x="60" y="62" width="8" height="70" rx="4" fill="#e50914"/>
+<text x="88.0" y="106.0" font-size="50" fill="#ececf2" font-weight="bold" text-anchor="start">A Phase Detector Is Not a Clock</text>
+<text x="88.0" y="146.0" font-size="25" fill="#8b8b96" font-weight="normal" text-anchor="start">Sit-to-stand phase detection, then the proof those labels cannot measure time</text>
+<text x="1540.0" y="88.0" font-size="19" fill="#5a5a66" font-weight="bold" text-anchor="end" letter-spacing="3.5">SYSTEM ARCHITECTURE</text>
+<text x="1540.0" y="128.0" font-size="34" fill="#e50914" font-weight="bold" text-anchor="end">2026</text>
+<line x1="60" y1="192" x2="1540" y2="192" stroke="#2f2f3a" stroke-width="2"/>
+<circle cx="65.0" cy="194" r="5" fill="#e50914"/>
+<text x="80.0" y="201.0" font-size="22" fill="#ececf2" font-weight="bold" text-anchor="start" letter-spacing="2.5">SIGNAL INPUT</text>
+<rect x="60.0" y="310.0" width="329.5" height="99.0" rx="10" fill="#1b1b21" stroke="#2f2f3a" stroke-width="2"/>
+<text x="78.0" y="344.0" font-size="22" fill="#ececf2" font-weight="bold" text-anchor="start">CeTI-Age-Kinematics</text>
+<text x="78.0" y="371.0" font-size="17" fill="#8b8b96" font-weight="normal" text-anchor="start">32 adults · 64 recordings</text>
+<text x="78.0" y="392.0" font-size="17" fill="#8b8b96" font-weight="normal" text-anchor="start">100 Hz fused kinematics</text>
+<rect x="60.0" y="419.0" width="329.5" height="78.0" rx="10" fill="#1b1b21" stroke="#2f2f3a" stroke-width="2"/>
+<text x="78.0" y="453.0" font-size="22" fill="#ececf2" font-weight="bold" text-anchor="start">7 IMU → 1 pelvis</text>
+<text x="78.0" y="480.0" font-size="17" fill="#8b8b96" font-weight="normal" text-anchor="start">Δ 0.002 tolerant macro-F1</text>
+<rect x="60.0" y="507.0" width="329.5" height="99.0" rx="10" fill="#1b1b21" stroke="#2f2f3a" stroke-width="2"/>
+<text x="78.0" y="541.0" font-size="22" fill="#ececf2" font-weight="bold" text-anchor="start">GaitPD / WearGait-PD</text>
+<text x="78.0" y="568.0" font-size="17" fill="#8b8b96" font-weight="normal" text-anchor="start">99 PD · 85 control</text>
+<text x="78.0" y="589.0" font-size="17" fill="#8b8b96" font-weight="normal" text-anchor="start">replication only, never pooled</text>
+<line x1="399.5" y1="458.0" x2="433.5" y2="458.0" stroke="#5a5a66" stroke-width="3" marker-end="url(#arrow)"/>
+<circle cx="448.5" cy="194" r="5" fill="#e50914"/>
+<text x="463.5" y="201.0" font-size="22" fill="#ececf2" font-weight="bold" text-anchor="start" letter-spacing="2.5">PART I — DETECTOR</text>
+<rect x="443.5" y="243.0" width="329.5" height="78.0" rx="10" fill="#1b1b21" stroke="#2f2f3a" stroke-width="2"/>
+<text x="461.5" y="277.0" font-size="22" fill="#ececf2" font-weight="bold" text-anchor="start">segment_sts.py</text>
+<text x="461.5" y="304.0" font-size="17" fill="#8b8b96" font-weight="normal" text-anchor="start">repetitions from pelvis-y</text>
+<rect x="443.5" y="331.0" width="329.5" height="78.0" rx="10" fill="#1b1b21" stroke="#2f2f3a" stroke-width="2"/>
+<text x="461.5" y="365.0" font-size="22" fill="#ececf2" font-weight="bold" text-anchor="start">static_anchor_labels</text>
+<text x="461.5" y="392.0" font-size="17" fill="#8b8b96" font-weight="normal" text-anchor="start">±175 ms anchor convention</text>
+<rect x="443.5" y="419.0" width="329.5" height="78.0" rx="10" fill="#1b1b21" stroke="#2f2f3a" stroke-width="2"/>
+<text x="461.5" y="453.0" font-size="22" fill="#ececf2" font-weight="bold" text-anchor="start">170 ms windows / 8</text>
+<text x="461.5" y="480.0" font-size="17" fill="#8b8b96" font-weight="normal" text-anchor="start">engineered + velocity feats</text>
+<rect x="443.5" y="507.0" width="329.5" height="78.0" rx="10" fill="#1b1b21" stroke="#2f2f3a" stroke-width="2"/>
+<text x="461.5" y="541.0" font-size="22" fill="#ececf2" font-weight="bold" text-anchor="start">Random Forest ×300</text>
+<text x="461.5" y="568.0" font-size="17" fill="#8b8b96" font-weight="normal" text-anchor="start">5-fold participant-grouped</text>
+<rect x="443.5" y="595.0" width="329.5" height="78.0" rx="10" fill="#1b1b21" stroke="#e50914" stroke-width="2"/>
+<rect x="443.5" y="595.0" width="4" height="78.0" rx="2" fill="#e50914"/>
+<text x="467.5" y="629.0" font-size="22" fill="#ffffff" font-weight="bold" text-anchor="start">audit_4class_pipeline</text>
+<text x="467.5" y="656.0" font-size="17" fill="#8b8b96" font-weight="normal" text-anchor="start">leakage · shuffle nulls</text>
+<line x1="783.0" y1="458.0" x2="817.0" y2="458.0" stroke="#5a5a66" stroke-width="3" marker-end="url(#arrow)"/>
+<circle cx="832.0" cy="194" r="5" fill="#e50914"/>
+<text x="847.0" y="201.0" font-size="22" fill="#ececf2" font-weight="bold" text-anchor="start" letter-spacing="2.5">PART II — INDEX</text>
+<rect x="827.0" y="243.0" width="329.5" height="78.0" rx="10" fill="#1b1b21" stroke="#2f2f3a" stroke-width="2"/>
+<text x="845.0" y="277.0" font-size="22" fill="#ececf2" font-weight="bold" text-anchor="start">velocity-gated re-seg</text>
+<text x="845.0" y="304.0" font-size="17" fill="#8b8b96" font-weight="normal" text-anchor="start">320/320 reps recovered</text>
+<rect x="827.0" y="331.0" width="329.5" height="78.0" rx="10" fill="#1b1b21" stroke="#2f2f3a" stroke-width="2"/>
+<text x="845.0" y="365.0" font-size="22" fill="#ececf2" font-weight="bold" text-anchor="start">extract_natural.py</text>
+<text x="845.0" y="392.0" font-size="17" fill="#8b8b96" font-weight="normal" text-anchor="start">per-rep kinematic features</text>
+<rect x="827.0" y="419.0" width="329.5" height="78.0" rx="10" fill="#1b1b21" stroke="#2f2f3a" stroke-width="2"/>
+<text x="845.0" y="453.0" font-size="22" fill="#ececf2" font-weight="bold" text-anchor="start">phase_score.py</text>
+<text x="845.0" y="480.0" font-size="17" fill="#8b8b96" font-weight="normal" text-anchor="start">FROZEN component registry</text>
+<rect x="827.0" y="507.0" width="329.5" height="78.0" rx="10" fill="#1b1b21" stroke="#2f2f3a" stroke-width="2"/>
+<text x="845.0" y="541.0" font-size="22" fill="#ececf2" font-weight="bold" text-anchor="start">validate_real_labels</text>
+<text x="845.0" y="568.0" font-size="17" fill="#8b8b96" font-weight="normal" text-anchor="start">known-groups + permutation</text>
+<rect x="827.0" y="595.0" width="329.5" height="78.0" rx="10" fill="#1b1b21" stroke="#e50914" stroke-width="2"/>
+<rect x="827.0" y="595.0" width="4" height="78.0" rx="2" fill="#e50914"/>
+<text x="851.0" y="629.0" font-size="22" fill="#ffffff" font-weight="bold" text-anchor="start">circularity_ablation</text>
+<text x="851.0" y="656.0" font-size="17" fill="#8b8b96" font-weight="normal" text-anchor="start">the computed retraction</text>
+<line x1="1166.5" y1="458.0" x2="1200.5" y2="458.0" stroke="#5a5a66" stroke-width="3" marker-end="url(#arrow)"/>
+<circle cx="1215.5" cy="194" r="5" fill="#e50914"/>
+<text x="1230.5" y="201.0" font-size="22" fill="#ececf2" font-weight="bold" text-anchor="start" letter-spacing="2.5">OUTPUT</text>
+<rect x="1210.5" y="287.0" width="329.5" height="78.0" rx="10" fill="#1b1b21" stroke="#e50914" stroke-width="2"/>
+<rect x="1210.5" y="287.0" width="4" height="78.0" rx="2" fill="#e50914"/>
+<text x="1234.5" y="321.0" font-size="22" fill="#ffffff" font-weight="bold" text-anchor="start">RisingControlIndex</text>
+<text x="1234.5" y="348.0" font-size="17" fill="#8b8b96" font-weight="normal" text-anchor="start">prespecified · unfitted</text>
+<rect x="1210.5" y="375.0" width="329.5" height="78.0" rx="10" fill="#1b1b21" stroke="#2f2f3a" stroke-width="2"/>
+<text x="1228.5" y="409.0" font-size="22" fill="#ececf2" font-weight="bold" text-anchor="start">Reliability report</text>
+<text x="1228.5" y="436.0" font-size="17" fill="#8b8b96" font-weight="normal" text-anchor="start">ICC · SEM · MDC</text>
+<rect x="1210.5" y="463.0" width="329.5" height="78.0" rx="10" fill="#1b1b21" stroke="#2f2f3a" stroke-width="2"/>
+<text x="1228.5" y="497.0" font-size="22" fill="#ececf2" font-weight="bold" text-anchor="start">paper/main.pdf</text>
+<text x="1228.5" y="524.0" font-size="17" fill="#8b8b96" font-weight="normal" text-anchor="start">5 pp + 16-slide talk</text>
+<rect x="1210.5" y="551.0" width="329.5" height="78.0" rx="10" fill="#1b1b21" stroke="#2f2f3a" stroke-width="2"/>
+<text x="1228.5" y="585.0" font-size="22" fill="#ececf2" font-weight="bold" text-anchor="start">PROVENANCE.md</text>
+<text x="1228.5" y="612.0" font-size="17" fill="#8b8b96" font-weight="normal" text-anchor="start">every figure → source CSV</text>
+<rect x="60" y="700" width="1480" height="58" rx="10" fill="none" stroke="#e50914" stroke-width="2" stroke-dasharray="10 8" opacity="0.75"/>
+<text x="800.0" y="737.0" font-size="19" fill="#8b8b96" font-weight="normal" text-anchor="middle">Reproducibility spine — deterministic SEED 20260722 · YAML-driven runner across 30+ pipeline variants · Part II regenerates with no raw data</text>
+<line x1="60" y1="784" x2="1540" y2="784" stroke="#2f2f3a" stroke-width="2"/>
+<text x="208.0" y="840.0" font-size="46" fill="#e50914" font-weight="bold" text-anchor="middle">0.735</text>
+<text x="208.0" y="872.0" font-size="20" fill="#8b8b96" font-weight="normal" text-anchor="middle">macro-F1, strict</text>
+<text x="504.0" y="840.0" font-size="46" fill="#e50914" font-weight="bold" text-anchor="middle">0.852</text>
+<text x="504.0" y="872.0" font-size="20" fill="#8b8b96" font-weight="normal" text-anchor="middle">at ±100 ms tolerance</text>
+<text x="800.0" y="840.0" font-size="46" fill="#e50914" font-weight="bold" text-anchor="middle">0.771</text>
+<text x="800.0" y="872.0" font-size="20" fill="#8b8b96" font-weight="normal" text-anchor="middle">index AUC, p = 0.0033</text>
+<text x="1096.0" y="840.0" font-size="46" fill="#e50914" font-weight="bold" text-anchor="middle">0.726</text>
+<text x="1096.0" y="872.0" font-size="20" fill="#8b8b96" font-weight="normal" text-anchor="middle">ICC, up from 0.334</text>
+<text x="1392.0" y="840.0" font-size="46" fill="#e50914" font-weight="bold" text-anchor="middle">0.867→0.100</text>
+<text x="1392.0" y="872.0" font-size="20" fill="#8b8b96" font-weight="normal" text-anchor="middle">retracted by ablation</text>
+</svg>

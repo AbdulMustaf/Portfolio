@@ -1,0 +1,83 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="1600" height="900" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" role="img" aria-label="Ward cameras and microphones feed a YOLO and TensorFlow perception layer; a fusion classifier scores aggression and a .NET service pushes alerts to an Angular monitoring dashboard.">
+<title>Ward cameras and microphones feed a YOLO and TensorFlow perception layer; a fusion classifier scores aggression and a .NET service pushes alerts to an Angular monitoring dashboard.</title>
+<defs>
+<radialGradient id="glow" cx="12%" cy="6%" r="70%">
+<stop offset="0%" stop-color="#e50914" stop-opacity="0.10"/>
+<stop offset="100%" stop-color="#e50914" stop-opacity="0"/>
+</radialGradient>
+<marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+<path d="M0 0 L10 5 L0 10 z" fill="#5a5a66"/>
+</marker>
+</defs>
+<rect width="1600" height="900" fill="#0f0f12"/>
+<rect width="1600" height="900" fill="url(#glow)"/>
+<rect x="60" y="62" width="8" height="70" rx="4" fill="#e50914"/>
+<text x="88.0" y="106.0" font-size="50" fill="#ececf2" font-weight="bold" text-anchor="start">MedSafe AI</text>
+<text x="88.0" y="146.0" font-size="23" fill="#8b8b96" font-weight="normal" text-anchor="start">Real-time hospital violence detection from video and audio, with automated alerting</text>
+<text x="1540.0" y="88.0" font-size="19" fill="#5a5a66" font-weight="bold" text-anchor="end" letter-spacing="3.5">SYSTEM ARCHITECTURE</text>
+<text x="1540.0" y="128.0" font-size="34" fill="#e50914" font-weight="bold" text-anchor="end">2025</text>
+<line x1="60" y1="192" x2="1540" y2="192" stroke="#2f2f3a" stroke-width="2"/>
+<circle cx="65.0" cy="194" r="5" fill="#e50914"/>
+<text x="80.0" y="201.0" font-size="22" fill="#ececf2" font-weight="bold" text-anchor="start" letter-spacing="2.5">CAPTURE</text>
+<rect x="60.0" y="298.0" width="329.5" height="96.0" rx="10" fill="#1b1b21" stroke="#2f2f3a" stroke-width="2"/>
+<text x="78.0" y="340.0" font-size="24" fill="#ececf2" font-weight="bold" text-anchor="start">Ward IP cameras</text>
+<text x="78.0" y="370.0" font-size="19" fill="#8b8b96" font-weight="normal" text-anchor="start">RTSP video frames</text>
+<rect x="60.0" y="410.0" width="329.5" height="96.0" rx="10" fill="#1b1b21" stroke="#2f2f3a" stroke-width="2"/>
+<text x="78.0" y="452.0" font-size="24" fill="#ececf2" font-weight="bold" text-anchor="start">Ambient microphones</text>
+<text x="78.0" y="482.0" font-size="19" fill="#8b8b96" font-weight="normal" text-anchor="start">streaming audio buffers</text>
+<rect x="60.0" y="522.0" width="329.5" height="96.0" rx="10" fill="#1b1b21" stroke="#2f2f3a" stroke-width="2"/>
+<text x="78.0" y="564.0" font-size="24" fill="#ececf2" font-weight="bold" text-anchor="start">Training corpus</text>
+<text x="78.0" y="594.0" font-size="19" fill="#8b8b96" font-weight="normal" text-anchor="start">5,000+ video + audio samples</text>
+<line x1="399.5" y1="458.0" x2="433.5" y2="458.0" stroke="#5a5a66" stroke-width="3" marker-end="url(#arrow)"/>
+<circle cx="448.5" cy="194" r="5" fill="#e50914"/>
+<text x="463.5" y="201.0" font-size="22" fill="#ececf2" font-weight="bold" text-anchor="start" letter-spacing="2.5">PERCEPTION</text>
+<rect x="443.5" y="298.0" width="329.5" height="96.0" rx="10" fill="#1b1b21" stroke="#2f2f3a" stroke-width="2"/>
+<text x="461.5" y="340.0" font-size="24" fill="#ececf2" font-weight="bold" text-anchor="start">OpenCV frame pipe</text>
+<text x="461.5" y="370.0" font-size="19" fill="#8b8b96" font-weight="normal" text-anchor="start">decode · resize · sample</text>
+<rect x="443.5" y="410.0" width="329.5" height="96.0" rx="10" fill="#1b1b21" stroke="#2f2f3a" stroke-width="2"/>
+<text x="461.5" y="452.0" font-size="24" fill="#ececf2" font-weight="bold" text-anchor="start">YOLO detection</text>
+<text x="461.5" y="482.0" font-size="19" fill="#8b8b96" font-weight="normal" text-anchor="start">people · poses · objects</text>
+<rect x="443.5" y="522.0" width="329.5" height="96.0" rx="10" fill="#1b1b21" stroke="#2f2f3a" stroke-width="2"/>
+<text x="461.5" y="564.0" font-size="24" fill="#ececf2" font-weight="bold" text-anchor="start">TensorFlow audio</text>
+<text x="461.5" y="594.0" font-size="19" fill="#8b8b96" font-weight="normal" text-anchor="start">distress / shout classes</text>
+<line x1="783.0" y1="458.0" x2="817.0" y2="458.0" stroke="#5a5a66" stroke-width="3" marker-end="url(#arrow)"/>
+<circle cx="832.0" cy="194" r="5" fill="#e50914"/>
+<text x="847.0" y="201.0" font-size="22" fill="#ececf2" font-weight="bold" text-anchor="start" letter-spacing="2.5">DECISION</text>
+<rect x="827.0" y="298.0" width="329.5" height="96.0" rx="10" fill="#1b1b21" stroke="#e50914" stroke-width="2"/>
+<rect x="827.0" y="298.0" width="4" height="96.0" rx="2" fill="#e50914"/>
+<text x="851.0" y="340.0" font-size="24" fill="#ffffff" font-weight="bold" text-anchor="start">Aggression classifier</text>
+<text x="851.0" y="370.0" font-size="19" fill="#8b8b96" font-weight="normal" text-anchor="start">fuses vision + audio</text>
+<rect x="827.0" y="410.0" width="329.5" height="96.0" rx="10" fill="#1b1b21" stroke="#2f2f3a" stroke-width="2"/>
+<text x="845.0" y="452.0" font-size="24" fill="#ececf2" font-weight="bold" text-anchor="start">Temporal smoothing</text>
+<text x="845.0" y="482.0" font-size="19" fill="#8b8b96" font-weight="normal" text-anchor="start">kills single-frame spikes</text>
+<rect x="827.0" y="522.0" width="329.5" height="96.0" rx="10" fill="#1b1b21" stroke="#2f2f3a" stroke-width="2"/>
+<text x="845.0" y="564.0" font-size="24" fill="#ececf2" font-weight="bold" text-anchor="start">Threshold + severity</text>
+<text x="845.0" y="594.0" font-size="19" fill="#8b8b96" font-weight="normal" text-anchor="start">confidence → alert tier</text>
+<line x1="1166.5" y1="458.0" x2="1200.5" y2="458.0" stroke="#5a5a66" stroke-width="3" marker-end="url(#arrow)"/>
+<circle cx="1215.5" cy="194" r="5" fill="#e50914"/>
+<text x="1230.5" y="201.0" font-size="22" fill="#ececf2" font-weight="bold" text-anchor="start" letter-spacing="2.5">RESPONSE</text>
+<rect x="1210.5" y="242.0" width="329.5" height="96.0" rx="10" fill="#1b1b21" stroke="#2f2f3a" stroke-width="2"/>
+<text x="1228.5" y="284.0" font-size="24" fill="#ececf2" font-weight="bold" text-anchor="start">.NET (C#) service</text>
+<text x="1228.5" y="314.0" font-size="19" fill="#8b8b96" font-weight="normal" text-anchor="start">incident API + dispatch</text>
+<rect x="1210.5" y="354.0" width="329.5" height="96.0" rx="10" fill="#1b1b21" stroke="#e50914" stroke-width="2"/>
+<rect x="1210.5" y="354.0" width="4" height="96.0" rx="2" fill="#e50914"/>
+<text x="1234.5" y="396.0" font-size="24" fill="#ffffff" font-weight="bold" text-anchor="start">Angular dashboard</text>
+<text x="1234.5" y="426.0" font-size="19" fill="#8b8b96" font-weight="normal" text-anchor="start">live feed · alert queue</text>
+<rect x="1210.5" y="466.0" width="329.5" height="96.0" rx="10" fill="#1b1b21" stroke="#2f2f3a" stroke-width="2"/>
+<text x="1228.5" y="508.0" font-size="24" fill="#ececf2" font-weight="bold" text-anchor="start">PostgreSQL store</text>
+<text x="1228.5" y="538.0" font-size="19" fill="#8b8b96" font-weight="normal" text-anchor="start">incidents, not identities</text>
+<rect x="1210.5" y="578.0" width="329.5" height="96.0" rx="10" fill="#1b1b21" stroke="#2f2f3a" stroke-width="2"/>
+<text x="1228.5" y="620.0" font-size="24" fill="#ececf2" font-weight="bold" text-anchor="start">Security staff alert</text>
+<text x="1228.5" y="650.0" font-size="19" fill="#8b8b96" font-weight="normal" text-anchor="start">pushed in real time</text>
+<rect x="60" y="700" width="1480" height="58" rx="10" fill="none" stroke="#e50914" stroke-width="2" stroke-dasharray="10 8" opacity="0.75"/>
+<text x="800.0" y="737.0" font-size="15" fill="#8b8b96" font-weight="normal" text-anchor="middle">Privacy by design — classifies actions, never identifies individuals · no personal identifiers stored · encrypted in transit · bias and explainability treated as requirements</text>
+<line x1="60" y1="784" x2="1540" y2="784" stroke="#2f2f3a" stroke-width="2"/>
+<text x="245.0" y="840.0" font-size="46" fill="#e50914" font-weight="bold" text-anchor="middle">~20%</text>
+<text x="245.0" y="872.0" font-size="20" fill="#8b8b96" font-weight="normal" text-anchor="middle">accuracy over baseline</text>
+<text x="615.0" y="840.0" font-size="46" fill="#e50914" font-weight="bold" text-anchor="middle">5,000+</text>
+<text x="615.0" y="872.0" font-size="20" fill="#8b8b96" font-weight="normal" text-anchor="middle">training samples</text>
+<text x="985.0" y="840.0" font-size="46" fill="#e50914" font-weight="bold" text-anchor="middle">1 in 5</text>
+<text x="985.0" y="872.0" font-size="20" fill="#8b8b96" font-weight="normal" text-anchor="middle">health workers affected</text>
+<text x="1355.0" y="840.0" font-size="46" fill="#e50914" font-weight="bold" text-anchor="middle">$2,000</text>
+<text x="1355.0" y="872.0" font-size="20" fill="#8b8b96" font-weight="normal" text-anchor="middle">Catalyst Challenge win</text>
+</svg>

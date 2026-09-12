@@ -33,7 +33,7 @@ export const projectsData: Project[] = [
       'Research',
       'LaTeX',
     ],
-    image: '',
+    image: '/images/arch-sts-phase-detector.svg',
     featured: true,
     year: '2026',
   },
@@ -55,7 +55,7 @@ export const projectsData: Project[] = [
       'Docker',
       'PostgreSQL',
     ],
-    image: '',
+    image: '/images/arch-medsafe-ai.svg',
     githubUrl: 'https://github.com/AbdulMustaf/ViolenceDetectionSystem',
     featured: true,
     year: '2025',
@@ -69,7 +69,7 @@ export const projectsData: Project[] = [
     longDescription:
       'AI Compliance Guard uses large language models and NLP pipelines to scan, analyze, and flag regulatory compliance gaps in legal and government documents. Built with Python, Flask, and Azure cognitive services.',
     tags: ['Python', 'Flask', 'NLP', 'Azure', 'AI', 'LLM'],
-    image: '/images/project-ai-compliance.jpg',
+    image: '/images/arch-ai-compliance-guard.svg',
     featured: true,
     year: '2024',
   },
@@ -82,7 +82,7 @@ export const projectsData: Project[] = [
     longDescription:
       'Pixel Zero tackles the growing problem of synthetic media by providing a fast, accurate detection pipeline. Uses PyTorch-based vision models served through a React frontend and Flask API.',
     tags: ['Python', 'PyTorch', 'React', 'Computer Vision', 'Flask', 'ML'],
-    image: '/images/project-pixel-zero.jpg',
+    image: '/images/arch-pixel-zero.svg',
     featured: true,
     year: '2024',
   },
@@ -95,7 +95,7 @@ export const projectsData: Project[] = [
     longDescription:
       'Led a team to a first-place finish in the OPS case competition by designing a citizen-facing digital service prototype using human-centered design principles. Presented to senior government stakeholders.',
     tags: ['Product Design', 'UX', 'Government Tech', 'Strategy'],
-    image: '/images/project-ops-competition.jpg',
+    image: '/images/arch-ops-case-competition.svg',
     featured: false,
     year: '2023',
   },
@@ -108,7 +108,7 @@ export const projectsData: Project[] = [
     longDescription:
       'Managed product roadmap and contributed to NLP model development at the Lee Language Lab. Built data pipelines and analysis tools to support academic research into language acquisition patterns.',
     tags: ['Python', 'NLP', 'Product Management', 'Research', 'Data Pipelines'],
-    image: '/images/project-language-lab.jpg',
+    image: '/images/arch-lee-language-lab.svg',
     year: '2023',
   },
 ]
