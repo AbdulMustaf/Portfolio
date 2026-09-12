@@ -81,18 +81,28 @@ npx vercel
 |---|---|---|
 | `GEMINI_API_KEY` | Yes (for AI answers) | API key from [Google AI Studio](https://aistudio.google.com/app/apikey) |
 | `GEMINI_MODEL` | No | Defaults to `gemini-3.1-flash-lite`. Google retires models on a schedule — a retired ID 404s on every call, so verify before changing (see below) |
-| `KV_REST_API_URL` | **Yes (for AI answers)** | From Vercel Dashboard → Storage → KV → your database → `.env.local` tab |
-| `KV_REST_API_TOKEN` | **Yes (for AI answers)** | Same location as `KV_REST_API_URL` |
+| `KV_REST_API_URL` | **Yes (for AI answers)** | Set automatically by the Upstash integration. `UPSTASH_REDIS_REST_URL` is also accepted |
+| `KV_REST_API_TOKEN` | **Yes (for AI answers)** | Same. `UPSTASH_REDIS_REST_TOKEN` is also accepted |
 | `RAG_MONTHLY_BUDGET_USD` | No | Monthly Gemini spend ceiling. Defaults to `2` |
 | `RAG_MAX_MODEL_CALLS_PER_DAY` | No | Daily model-call ceiling. Defaults to `800` (under the free tier's ~1000/day) |
 | `RAG_PRICE_INPUT_PER_M` / `RAG_PRICE_OUTPUT_PER_M` | No | Per-1M-token prices used by the spend ledger. Update if you change the model |
 | `RAG_HEALTH_TOKEN` | No | Secret for `/api/rag-health`. Unset means that route 404s |
 
-**Setting up Vercel KV (persistent viewer count):**
-1. Go to Vercel Dashboard → Storage → Create Database → KV
-2. Once created, open the database → `.env.local` tab
-3. Copy `KV_REST_API_URL` and `KV_REST_API_TOKEN` into your project's environment variables
-4. Redeploy for the variables to take effect
+**Setting up Redis (required for AI answers and the viewer count):**
+
+Vercel KV was discontinued as a first-party product; the replacement is Upstash
+Redis through the Vercel Marketplace. It provisions the database and sets the
+environment variables on the project automatically:
+
+```bash
+vercel integration add upstash/upstash-kv
+vercel env pull        # pull the new vars into .env.local
+```
+
+Or via the dashboard: **Vercel Dashboard → Storage → Create Database → Upstash for Redis**.
+
+Redeploy afterwards so the functions pick up the new variables. Upstash's free
+tier covers this site's usage comfortably.
 
 **KV is required for AI answers, not just the counter.** Rate limiting, the spend
 ledger and the answer cache all live in KV, so without it `/api/rag-chat` will not

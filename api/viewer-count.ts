@@ -2,6 +2,8 @@
 
 import type { IncomingMessage, ServerResponse } from 'node:http'
 
+import { kvCredentials } from './_lib/kv.js'
+
 const VIEWER_COUNT_KEY = 'portfolio:viewer-count'
 const VISITOR_SET_KEY = 'portfolio:visitors'
 
@@ -19,8 +21,7 @@ function getQueryParam(url: string, param: string): string | null {
 async function isNewVisitor(visitorId: string): Promise<boolean> {
   if (!visitorId) return true // Treat missing ID as new (shouldn't happen)
 
-  const url = process.env.KV_REST_API_URL
-  const token = process.env.KV_REST_API_TOKEN
+  const { url, token } = kvCredentials()
   if (!url || !token) return true // If KV unavailable, treat as new (fallback)
 
   // Check if visitor exists in the set: SISMEMBER portfolio:visitors <visitorId>
@@ -38,8 +39,7 @@ async function isNewVisitor(visitorId: string): Promise<boolean> {
 
 // Add visitor ID to the set and increment count
 async function registerNewVisitor(visitorId: string): Promise<number | null> {
-  const url = process.env.KV_REST_API_URL
-  const token = process.env.KV_REST_API_TOKEN
+  const { url, token } = kvCredentials()
   if (!url || !token) return null
 
   try {
@@ -64,8 +64,7 @@ async function registerNewVisitor(visitorId: string): Promise<number | null> {
 
 // Get current viewer count without incrementing
 async function getViewerCount(): Promise<number | null> {
-  const url = process.env.KV_REST_API_URL
-  const token = process.env.KV_REST_API_TOKEN
+  const { url, token } = kvCredentials()
   if (!url || !token) return null
 
   try {

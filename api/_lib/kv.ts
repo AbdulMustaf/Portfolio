@@ -14,11 +14,23 @@
 
 const REQUEST_TIMEOUT_MS = 1_500
 
+/**
+ * Resolves REST credentials under either naming scheme.
+ *
+ * The legacy Vercel KV integration sets KV_REST_API_*; the Upstash Marketplace
+ * integration that replaced it sets UPSTASH_REDIS_REST_*. Accepting both means
+ * provisioning is a one-click install with no manual env aliasing.
+ */
+export function kvCredentials(): { url?: string; token?: string } {
+  const url = process.env.KV_REST_API_URL ?? process.env.UPSTASH_REDIS_REST_URL
+  const token = process.env.KV_REST_API_TOKEN ?? process.env.UPSTASH_REDIS_REST_TOKEN
+  return { url: url?.replace(/\/+$/, ''), token }
+}
+
 function credentials(): { url: string; token: string } | null {
-  const url = process.env.KV_REST_API_URL
-  const token = process.env.KV_REST_API_TOKEN
+  const { url, token } = kvCredentials()
   if (!url || !token) return null
-  return { url: url.replace(/\/+$/, ''), token }
+  return { url, token }
 }
 
 export function kvAvailable(): boolean {
