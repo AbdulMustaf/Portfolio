@@ -1,5 +1,6 @@
-import { useCallback, useLayoutEffect, useMemo, useRef, useState } from 'react'
+import { useCallback, useId, useLayoutEffect, useMemo, useRef, useState } from 'react'
 import { experienceData } from '../data/experienceData'
+import { profileData } from '../data/profileData'
 import { skillsData } from '../data/skillsData'
 
 type NodeType = 'profile' | 'experience' | 'category' | 'skill'
@@ -474,6 +475,8 @@ function layoutGraph(nodes: GraphNode[], width: number, height: number): PlacedN
 
 export default function KnowledgeGraph() {
   const [activeNodeId, setActiveNodeId] = useState(PROFILE_ID)
+  // Colons from useId() are legal in ids but break url(#...) references.
+  const avatarPatternId = `kg-avatar-${useId().replace(/:/g, '')}`
   const [size, setSize] = useState({ width: 0, height: 0 })
 
   const canvasRef = useRef<HTMLDivElement>(null)
@@ -743,6 +746,29 @@ export default function KnowledgeGraph() {
               onPointerMove={handlePointerMove}
               onPointerLeave={handlePointerLeave}
             >
+              <defs>
+                {/*
+                  The centre node is filled with the photo rather than covered by
+                  a separate <image>: the hover animation scales that circle via a
+                  transform attribute, and an objectBoundingBox pattern scales with
+                  it for free. The crop is square and so is the circle's bounding
+                  box, so "slice" never distorts.
+                */}
+                <pattern
+                  id={avatarPatternId}
+                  patternContentUnits="objectBoundingBox"
+                  width="1"
+                  height="1"
+                >
+                  <image
+                    href={profileData.avatarImage}
+                    width="1"
+                    height="1"
+                    preserveAspectRatio="xMidYMid slice"
+                  />
+                </pattern>
+              </defs>
+
               {edges.map((edge, index) => {
                 const source = layout[indexById.get(edge.source) ?? -1]
                 const target = layout[indexById.get(edge.target) ?? -1]
@@ -786,20 +812,24 @@ export default function KnowledgeGraph() {
                         circleRefs.current[index] = element
                       }}
                       r={node.r}
-                      fill={node.color}
+                      fill={node.type === 'profile' ? `url(#${avatarPatternId})` : node.color}
                     />
-                    <text
-                      ref={(element) => {
-                        labelRefs.current[index] = element
-                      }}
-                      className="graph-node-label"
-                      textAnchor="middle"
-                      y={node.labelDy}
-                      fontSize={node.fontSize}
-                      strokeWidth={node.haloWidth}
-                    >
-                      {node.short}
-                    </text>
+                    {/* The photo identifies the centre node, so its caption is
+                        redundant; the group's aria-label still announces the name. */}
+                    {node.type !== 'profile' && (
+                      <text
+                        ref={(element) => {
+                          labelRefs.current[index] = element
+                        }}
+                        className="graph-node-label"
+                        textAnchor="middle"
+                        y={node.labelDy}
+                        fontSize={node.fontSize}
+                        strokeWidth={node.haloWidth}
+                      >
+                        {node.short}
+                      </text>
+                    )}
                   </g>
                 )
               })}
