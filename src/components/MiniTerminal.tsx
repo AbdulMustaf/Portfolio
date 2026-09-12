@@ -15,9 +15,25 @@ interface TerminalLine {
 
 // ─── Constants ────────────────────────────────────────────────────────────────
 
-const TYPING_SPEED = 26       // ms per character (base)
+const TYPING_SPEED = 26       // ms per character (base, short lines)
 const TYPING_VARIANCE = 16    // max extra ms for realism
 const INTRO_PAUSE = 650       // ms pause between intro messages
+const TYPING_BUDGET_MS = 5000 // soft ceiling on how long one line takes to type
+const MIN_TYPING_SPEED = 4    // ms per character floor for long answers
+
+/**
+ * Per-character delay for a line of `length` characters.
+ *
+ * At a flat 26ms a long answer takes over a minute to render, which reads as a
+ * hang rather than an effect. Long lines speed up so any single message lands
+ * within roughly TYPING_BUDGET_MS, while short ones keep the original cadence.
+ */
+function typingDelayFor(length: number): { speed: number; variance: number } {
+  if (length <= 0) return { speed: TYPING_SPEED, variance: TYPING_VARIANCE }
+  const speed = Math.min(TYPING_SPEED, Math.max(MIN_TYPING_SPEED, TYPING_BUDGET_MS / length))
+  // Keep jitter proportional so fast lines don't wobble.
+  return { speed, variance: TYPING_VARIANCE * (speed / TYPING_SPEED) }
+}
 
 // ─── Utilities ────────────────────────────────────────────────────────────────
 
@@ -92,6 +108,8 @@ export default function MiniTerminal() {
   const [inputReady, setInputReady] = useState(false)
   const [input, setInput] = useState('')
   const [history, setHistory] = useState<ChatMessage[]>([])
+  // Shown once per session so a degraded backend is visible without nagging.
+  const [degradedNotified, setDegradedNotified] = useState(false)
 
   // cancelRef: stops character-level typing mid-word
   const cancelRef = useRef(false)
@@ -121,6 +139,7 @@ export default function MiniTerminal() {
         if (cancelRef.current) { resolve(); return }
 
         const id = uid()
+        const { speed, variance } = typingDelayFor(text.length)
         let i = 0
         setTypingLine({ id, text: '', type })
 
@@ -133,7 +152,7 @@ export default function MiniTerminal() {
           i++
           setTypingLine({ id, text: text.slice(0, i), type })
           if (i < text.length) {
-            setTimeout(tick, TYPING_SPEED + Math.random() * TYPING_VARIANCE)
+            setTimeout(tick, speed + Math.random() * variance)
           } else {
             setTypingLine(null)
             setLines((prev) => [...prev, { id, text, type }])
@@ -141,7 +160,7 @@ export default function MiniTerminal() {
           }
         }
 
-        setTimeout(tick, TYPING_SPEED + Math.random() * TYPING_VARIANCE)
+        setTimeout(tick, speed + Math.random() * variance)
       }),
     [],
   )
@@ -157,6 +176,7 @@ export default function MiniTerminal() {
       setHistory([])
       setInput('')
       setLoadingMsg(null)
+      setDegradedNotified(false)
 
       try {
         setLoadingMsg('Connecting...')
@@ -248,12 +268,19 @@ export default function MiniTerminal() {
       ]
 
       try {
-        const answer = await sendRagMessage(msg, nextHistory)
+        const { answer, degraded } = await sendRagMessage(msg, nextHistory)
 
         if (seqRef.current !== seq) return
 
         setHistory([...nextHistory, { role: 'assistant', content: answer }])
         setLoadingMsg(null)
+
+        if (degraded && !degradedNotified) {
+          setDegradedNotified(true)
+          await typeMessage('[offline mode — answers from local keyword search]', 'info')
+          if (seqRef.current !== seq) return
+        }
+
         await typeMessage(answer, 'bot')
 
         if (seqRef.current === seq) {
@@ -266,7 +293,7 @@ export default function MiniTerminal() {
         setInputReady(true)
       }
     },
-    [input, history, typeMessage],
+    [input, history, typeMessage, degradedNotified],
   )
 
   // ── Render ─────────────────────────────────────────────────────────────────

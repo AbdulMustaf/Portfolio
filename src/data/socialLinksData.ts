@@ -9,13 +9,13 @@ export const socialLinksData: SocialLink[] = [
   {
     platform: 'linkedin',
     label: 'LinkedIn',
-    url: 'https://linkedin.com/in/abdullahmustafa',
+    url: 'https://www.linkedin.com/in/abdullah-mustafa-5080282b2/',
     icon: 'FaLinkedin',
   },
   {
     platform: 'github',
     label: 'GitHub',
-    url: 'https://github.com/abdullahmustafa',
+    url: 'https://github.com/AbdulMustaf',
     icon: 'FaGithub',
   },
   {

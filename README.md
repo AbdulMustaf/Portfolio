@@ -9,7 +9,7 @@ A cinematic, Netflix-inspired personal portfolio built with React, TypeScript, G
 - **Netflix UI** — Hero banner, horizontal card carousels, dark theme, red accent
 - **Data-driven** — All content lives in `src/data/` files; update content without touching components
 - **Resume viewer** — PDF embed at `/resume` with download fallback
-- **Terminal assistant** — `/api/rag-chat` retrieves portfolio context and answers questions through Gemini when configured
+- **Terminal assistant** — `/api/rag-chat` answers visitor questions from portfolio data, escalating to Gemini only for questions the deterministic rules can't cover, under a hard monthly spend cap
 - **Viewer counter** — `/api/viewer-count` increments a persistent Vercel KV / Upstash count when configured
 - **Fully responsive** — Desktop, tablet, mobile
 
@@ -80,9 +80,13 @@ npx vercel
 | Variable | Required | Description |
 |---|---|---|
 | `GEMINI_API_KEY` | Yes (for AI answers) | API key from [Google AI Studio](https://aistudio.google.com/app/apikey) |
-| `GEMINI_MODEL` | No | Defaults to `gemini-2.0-flash-lite`. Other options: `gemini-2.0-flash`, `gemini-1.5-flash`, `gemini-2.5-flash` |
-| `KV_REST_API_URL` | Yes (for persistent counter) | From Vercel Dashboard → Storage → KV → your database → `.env.local` tab |
-| `KV_REST_API_TOKEN` | Yes (for persistent counter) | Same location as `KV_REST_API_URL` |
+| `GEMINI_MODEL` | No | Defaults to `gemini-3.1-flash-lite`. Google retires models on a schedule — a retired ID 404s on every call, so verify before changing (see below) |
+| `KV_REST_API_URL` | **Yes (for AI answers)** | From Vercel Dashboard → Storage → KV → your database → `.env.local` tab |
+| `KV_REST_API_TOKEN` | **Yes (for AI answers)** | Same location as `KV_REST_API_URL` |
+| `RAG_MONTHLY_BUDGET_USD` | No | Monthly Gemini spend ceiling. Defaults to `2` |
+| `RAG_MAX_MODEL_CALLS_PER_DAY` | No | Daily model-call ceiling. Defaults to `800` (under the free tier's ~1000/day) |
+| `RAG_PRICE_INPUT_PER_M` / `RAG_PRICE_OUTPUT_PER_M` | No | Per-1M-token prices used by the spend ledger. Update if you change the model |
+| `RAG_HEALTH_TOKEN` | No | Secret for `/api/rag-health`. Unset means that route 404s |
 
 **Setting up Vercel KV (persistent viewer count):**
 1. Go to Vercel Dashboard → Storage → Create Database → KV
@@ -90,10 +94,42 @@ npx vercel
 3. Copy `KV_REST_API_URL` and `KV_REST_API_TOKEN` into your project's environment variables
 4. Redeploy for the variables to take effect
 
-For a no-payment setup, create the Gemini key in Google AI Studio on the free tier and do not enable billing on the project. Without these variables, the app still deploys: the terminal uses local fallback answers and the viewer API uses an instance-local count. The Gemini route also has an in-memory per-IP limiter before the external API call, so heavy traffic falls back to local portfolio context instead of burning API quota.
+**KV is required for AI answers, not just the counter.** Rate limiting, the spend
+ledger and the answer cache all live in KV, so without it `/api/rag-chat` will not
+call Gemini at all — it answers from the local rule engine instead. An unmetered
+model call is how a fixed budget gets blown, so the route fails closed on purpose.
+
+For a no-payment setup, create the Gemini key in Google AI Studio on the free tier
+and do not enable billing on the project; the free tier allows roughly 1000
+requests/day, well above what this site needs. If you do enable billing, also set a
+[Cloud spend cap](https://docs.cloud.google.com/billing/docs/how-to/budgets-spend-caps)
+slightly below your real ceiling — enforcement lags ~10 minutes — as a backstop
+behind the in-app budget.
+
+**How requests are costed.** Each question descends a ladder and stops at the first
+tier that can answer it: guardrails (empty / prompt injection / sensitive /
+off-topic), then the deterministic rule engine, then a 7-day answer cache, and only
+then Gemini. Roughly 70% of real traffic never reaches the model. A question that
+does costs about $0.0004, so a $2/month budget covers ~4,700 model calls. Past 80%
+of the budget the endpoint stops paying for anything the rule engine can already
+answer.
+
+**Checking the model is alive.** A retired model ID returns 404 on every call and
+the endpoint quietly answers from keyword search instead — easy to miss. Every
+response reports the tier that served it in the `X-RAG-Mode` header and a `mode`
+field, and the terminal shows `[offline mode]` when answers stop coming from the
+model. To check directly:
+
+```bash
+# list the models your key can actually use
+curl "https://generativelanguage.googleapis.com/v1beta/models?key=$GEMINI_API_KEY"
+
+# health + budget, and probe the model end to end
+curl "https://<your-domain>/api/rag-health?token=$RAG_HEALTH_TOKEN&probe=1"
+```
 
 **Verifying in production:**
-- RAG: Open the terminal and ask "What are Abdullah's skills?" — if `GEMINI_API_KEY` is set correctly, you get a clean AI answer; otherwise you get a structured fallback from portfolio data
+- RAG: Open the terminal and ask something open-ended like "Why did he retract his own research result?" — with `GEMINI_API_KEY` and KV set you get a synthesised answer and `X-RAG-Mode: model`. Canonical questions ("what are his skills?") are answered from portfolio data for free and report `X-RAG-Mode: rule`, which is expected, not a failure
 - Viewer count: Open the terminal in a private/incognito window and compare the count shown to the previous session; it should be higher by exactly 1 if KV is configured
 
 The `vercel.json` SPA rewrite rule is already configured.

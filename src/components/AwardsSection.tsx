@@ -1,44 +1,26 @@
 import { useRef, useEffect } from 'react'
+import type { ReactNode } from 'react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { FaTrophy, FaMedal, FaStar } from 'react-icons/fa'
 import { useGlossHover } from '../hooks/useGlossHover'
 import GlossOverlay from './GlossOverlay'
+import { awardsData } from '../data/awardsData'
 
 gsap.registerPlugin(ScrollTrigger)
 
-const awards = [
-  {
-    id: 'ops-competition',
-    title: '1st Place — OPS Case Competition',
-    org: 'Ontario Public Service',
-    year: '2023',
-    description:
-      'Won first place in the Ontario Public Service case competition for designing a citizen-facing digital service prototype addressing government transformation challenges.',
-    icon: <FaTrophy className="text-yellow-400" size={22} />,
-    tier: 'gold',
-  },
-  {
-    id: 'hackathon',
-    title: 'Hackathon Achievement',
-    org: 'Ontario Tech University',
-    year: '2023',
-    description:
-      'Recognized for outstanding technical innovation and teamwork at a university-level hackathon event.',
-    icon: <FaMedal className="text-gray-300" size={22} />,
-    tier: 'silver',
-  },
-  {
-    id: 'dean-list',
-    title: "Dean's List",
-    org: 'Ontario Tech University',
-    year: '2022–2024',
-    description:
-      "Recognized on the Dean's List for academic excellence across multiple semesters in the Computer Science program.",
-    icon: <FaStar className="text-netflix-red" size={22} />,
-    tier: 'academic',
-  },
-]
+/**
+ * Icons live here rather than in the data file so the corpus used by the RAG
+ * endpoint stays plain serialisable data with no JSX dependency.
+ */
+const awardIcons: Record<string, ReactNode> = {
+  hackhive: <FaTrophy className="text-yellow-400" size={22} />,
+  'ops-competition': <FaTrophy className="text-yellow-400" size={22} />,
+  hackathon: <FaMedal className="text-gray-300" size={22} />,
+  'dean-list': <FaStar className="text-netflix-red" size={22} />,
+}
+
+const awards = awardsData
 
 const tierBorder: Record<string, string> = {
   gold: 'border-yellow-500/30 hover:border-yellow-500/60',
@@ -57,7 +39,7 @@ function AwardCard({ award }: { award: typeof awards[number] }) {
       className={`award-card gloss-hover bg-netflix-dark-2 rounded-xl p-6 border transition-colors duration-300 ${tierBorder[award.tier]}`}
     >
       <div className="flex items-start gap-3 mb-3">
-        <div className="flex-shrink-0 mt-0.5">{award.icon}</div>
+        <div className="flex-shrink-0 mt-0.5">{awardIcons[award.id]}</div>
         <div>
           <h3 className="text-white font-bold text-sm leading-snug">{award.title}</h3>
           <p className="text-text-secondary text-xs mt-0.5">

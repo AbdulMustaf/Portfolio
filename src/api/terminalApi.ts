@@ -11,6 +11,7 @@
  *     body: { message: string, conversationHistory: ChatMessage[] }
  */
 
+import { awardsData } from '../data/awardsData'
 import { profileData } from '../data/profileData'
 import { experienceData } from '../data/experienceData'
 import { projectsData } from '../data/projectsData'
@@ -28,7 +29,14 @@ const ragData = {
   experience: experienceData,
   projects: projectsData,
   skills: skillsData,
+  awards: awardsData,
 }
+
+/**
+ * Turns the server keeps. Sending more is wasted upload — the API trims the
+ * transcript to the last few turns before it ever reaches the model.
+ */
+const MAX_HISTORY_TURNS = 4
 
 // ─── Viewer Count ─────────────────────────────────────────────────────────────
 
@@ -75,23 +83,38 @@ export async function getViewerCount(): Promise<number> {
 
 // ─── RAG Chat ─────────────────────────────────────────────────────────────────
 
+export interface RagReply {
+  answer: string
+  /**
+   * True when the answer came from the keyword engine rather than the model —
+   * rate limited, over budget, or the provider is down. Surfaced in the UI so
+   * a broken model path is visible instead of silently looking normal.
+   */
+  degraded: boolean
+}
+
 export async function sendRagMessage(
   message: string,
   conversationHistory: ChatMessage[],
-): Promise<string> {
+): Promise<RagReply> {
   try {
     const res = await fetch('/api/rag-chat', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ message, conversationHistory }),
+      body: JSON.stringify({
+        message,
+        conversationHistory: conversationHistory.slice(-MAX_HISTORY_TURNS),
+      }),
     })
     if (!res.ok) throw new Error('rag-chat failed')
-    const data = await res.json() as { answer?: string }
+    const data = await res.json() as { answer?: string; degraded?: boolean }
     if (!data.answer) throw new Error('rag-chat malformed')
-    return data.answer
+    return { answer: data.answer, degraded: data.degraded === true }
   } catch {
+    // The endpoint itself is unreachable: answer in-browser so the terminal
+    // still works offline or during a deploy.
     await pause(450)
-    return localFallback(message)
+    return { answer: localFallback(message), degraded: true }
   }
 }
 
