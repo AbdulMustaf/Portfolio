@@ -1,5 +1,3 @@
-import { useRef } from 'react'
-import HeroMaskOverlay from './HeroMaskOverlay'
 import HeroLyricsLayer from './HeroLyricsLayer'
 
 // Hero image tuning:
@@ -12,21 +10,13 @@ interface Props {
   src: string
   alt: string
   className?: string
-  /**
-   * The hero content layer sits above this image, so the section ref is used for
-   * pointer events while this component still owns the face-positioned overlay.
-   */
-  eventContainerRef?: React.RefObject<HTMLElement | null>
 }
 
-export default function HeroMaskReveal({ src, alt, className = '', eventContainerRef }: Props) {
-  const containerRef = useRef<HTMLDivElement>(null)
-
+export default function HeroMaskReveal({ src, alt, className = '' }: Props) {
   return (
     <div
-      ref={containerRef}
       className={`relative select-none ${className}`}
-      style={{ isolation: 'isolate', cursor: 'pointer' }}
+      style={{ isolation: 'isolate' }}
     >
       <HeroLyricsLayer />
       <img
@@ -41,7 +31,6 @@ export default function HeroMaskReveal({ src, alt, className = '', eventContaine
         }}
         draggable={false}
       />
-      <HeroMaskOverlay eventContainerRef={eventContainerRef ?? containerRef} />
       {/* Subtle vignette overlay */}
       <div
         className="absolute inset-0 pointer-events-none"

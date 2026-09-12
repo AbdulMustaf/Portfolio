@@ -9,7 +9,6 @@ import { FaMapMarkerAlt } from 'react-icons/fa'
 
 export default function HeroBanner() {
   const navigate = useNavigate()
-  const sectionRef = useRef<HTMLElement>(null)
   const textRef = useRef<HTMLDivElement>(null)
   const badgesRef = useRef<HTMLDivElement>(null)
   const buttonsRef = useRef<HTMLDivElement>(null)
@@ -43,19 +42,17 @@ export default function HeroBanner() {
 
   return (
     <section
-      ref={sectionRef}
       id="home"
       className="relative w-full overflow-hidden"
       style={{ minHeight: '100svh' }}
     >
-      {/* Full-section hero image layer. Mask overlay stays positioned relative to this image layer. */}
+      {/* Full-section hero image layer. */}
       <div className="absolute inset-0">
         {profileData.heroImage ? (
           <HeroMaskReveal
             src={profileData.heroImage}
             alt={`${profileData.name} — hero photo`}
             className="w-full h-full"
-            eventContainerRef={sectionRef}
           />
         ) : (
           /* Placeholder gradient when no image provided */
