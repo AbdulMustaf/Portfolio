@@ -1,6 +1,7 @@
 import { useCallback, useId, useLayoutEffect, useMemo, useRef, useState } from 'react'
 import { experienceData } from '../data/experienceData'
 import { profileData } from '../data/profileData'
+import { CATEGORY_COLORS } from '../lib/skillCategories'
 import { skillsData } from '../data/skillsData'
 
 type NodeType = 'profile' | 'experience' | 'category' | 'skill'
@@ -130,16 +131,6 @@ const SKILL_SHELLS = [0.67, 0.84, 1]
 /** < 1 pushes the skill shells toward a squircle; 1 would be a plain ellipse. */
 const SKILL_BULGE = 0.7
 
-const CATEGORY_COLORS = [
-  '#e50914',
-  '#f5a524',
-  '#2dd4bf',
-  '#38bdf8',
-  '#a78bfa',
-  '#f472b6',
-  '#84cc16',
-  '#fb7185',
-]
 
 const SKILL_ALIASES: Record<string, string> = {
   Testing: 'Automated Testing',

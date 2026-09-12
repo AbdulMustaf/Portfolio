@@ -101,48 +101,6 @@ body {
   @apply text-text-primary text-xl sm:text-2xl font-bold mb-4 tracking-wide;
 }
 
-/* ── react-vertical-timeline-component dark-theme overrides ──────────────── */
-.vertical-timeline-element-date,
-.vertical-timeline-element-date * {
-  color: #999999 !important;
-  font-size: 0.85rem !important;
-}
-.vertical-timeline-element-content {
-  position: relative;
-  overflow: hidden;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-.vertical-timeline-element-content::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    160deg,
-    rgba(255, 255, 255, 0.35) 0%,
-    rgba(255, 255, 255, 0.08) 45%,
-    rgba(0, 0, 0, 0.1) 100%
-  );
-  border-radius: inherit;
-  pointer-events: none;
-  z-index: 0;
-}
-.vertical-timeline-element-content > * {
-  position: relative;
-  z-index: 1;
-}
-.vertical-timeline-element-content:hover {
-  transform: scale(1.02);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4) !important;
-}
-@media (max-width: 480px) {
-  .vertical-timeline-element-content {
-    padding: 14px 16px !important;
-  }
-  .vertical-timeline-element-content-arrow {
-    border-right-width: 6px !important;
-  }
-}
-
 /* ── Experience page ─────────────────────────────────────────────────────── */
 .timeline-container {
   text-align: center;
