@@ -159,3 +159,53 @@ export function buildCoreContext(now: Date): string {
     .filter((line) => line !== '')
     .join('\n')
 }
+
+
+// ─── Entity mentions ──────────────────────────────────────────────────────────
+
+/**
+ * Proper nouns the visitor could name: projects, organisations, awards, skills.
+ *
+ * Category labels ("Languages", "AI / ML") are deliberately excluded — those are
+ * the generic buckets a broad question uses ("what are his skills?"), and
+ * treating them as entities would defeat the point of the check.
+ */
+const entityPhrases: string[] = (() => {
+  const raw = [
+    ...projectsData.map((p) => p.title),
+    ...experienceData.flatMap((e) => [e.org, e.orgFull]),
+    ...awardsData.flatMap((a) => [a.title, a.org]),
+    ...skillsData.flatMap((c) => c.skills),
+  ]
+
+  // Titles are often "Name — Descriptor" ("Lee Language Lab — NLP Research"),
+  // and visitors name only the first half. Index both sides as well as the
+  // whole string. Only a spaced dash separates, so hyphenated words such as
+  // "1D-CNN" and "Sit-to-stand" stay intact.
+  const withParts = raw.flatMap((phrase) =>
+    phrase.includes(' — ') || phrase.includes(' – ') || phrase.includes(' - ')
+      ? [phrase, ...phrase.split(/\s[—–-]\s/)]
+      : [phrase],
+  )
+
+  const normalized = withParts
+    .map((phrase) => phrase.toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim())
+    // Very short fragments ("sql", "java") match too eagerly inside other words
+    // once padded, and add little: a question naming only those is broad anyway.
+    .filter((phrase) => phrase.length >= 4)
+
+  return [...new Set(normalized)]
+})()
+
+/**
+ * True when the question names something specific the portfolio knows about.
+ *
+ * Used to decide whether a directory-style answer ("here is every project")
+ * actually answers what was asked. "What projects has he built?" names nothing
+ * and the list is right; "What did he build at HackHive?" names an entity and
+ * deserves a real answer about that entity.
+ */
+export function mentionsKnownEntity(question: string): boolean {
+  const haystack = ` ${question.toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim()} `
+  return entityPhrases.some((phrase) => haystack.includes(` ${phrase} `))
+}

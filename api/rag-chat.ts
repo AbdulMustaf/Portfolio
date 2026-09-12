@@ -30,7 +30,7 @@ import { resolveRule } from '../src/lib/ragRules.js'
 import type { RuleId } from '../src/lib/ragRules.js'
 
 import { recordUsage, reserve } from './_lib/budget.js'
-import { buildCoreContext } from './_lib/corpus.js'
+import { buildCoreContext, mentionsKnownEntity } from './_lib/corpus.js'
 import { callModel, modelName } from './_lib/gemini.js'
 import {
   CANNED,
@@ -57,6 +57,10 @@ const ragData = {
 /**
  * Intents whose rule output is curated text or an exhaustive list — a model
  * rewrite would cost money and could only make them less accurate.
+ *
+ * Only while the question names nothing specific, though. These answers are
+ * directories ("here is every project"), which answer "what has he built?" well
+ * and "what did he build at HackHive?" badly. See the entity check below.
  */
 const RULE_IS_BEST: ReadonlySet<RuleId> = new Set<RuleId>([
   'greeting', 'resume', 'contact', 'location',
@@ -170,7 +174,12 @@ export default async function handler(req: IncomingMessage, res: ServerResponse)
 
   // ── Tier 2: deterministic rules ────────────────────────────────────────────
   const ruled = resolveRule(question, ragData)
-  if (RULE_IS_BEST.has(ruled.rule)) {
+
+  // A directory-style answer is only the best answer to a question that named
+  // nothing specific. Once a visitor names a project, employer, award or
+  // skill, handing back the full list ignores what they asked, so those
+  // questions fall through to the model — which is what the budget is for.
+  if (RULE_IS_BEST.has(ruled.rule) && !mentionsKnownEntity(question)) {
     reply(res, ruled.answer, 'rule')
     return
   }
